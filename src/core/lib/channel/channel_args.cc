@@ -16,13 +16,10 @@
 //
 //
 
+#include <grpc/support/port_platform.h>
+
 #include "src/core/lib/channel/channel_args.h"
 
-#include <grpc/impl/channel_arg_names.h>
-#include <grpc/support/alloc.h>
-#include <grpc/support/log.h>
-#include <grpc/support/port_platform.h>
-#include <grpc/support/string_util.h>
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,6 +35,12 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_join.h"
+
+#include <grpc/impl/channel_arg_names.h>
+#include <grpc/support/alloc.h>
+#include <grpc/support/log.h>
+#include <grpc/support/string_util.h>
+
 #include "src/core/lib/gpr/useful.h"
 
 namespace grpc_core {
@@ -126,14 +129,14 @@ bool ChannelArgs::WantMinimalStack() const {
 ChannelArgs::ChannelArgs(AVL<RefCountedStringValue, Value> args)
     : args_(std::move(args)) {}
 
-ChannelArgs ChannelArgs::Set(grpc_arg arg,
-                             grpc_core::SourceLocation location) const {
+ChannelArgs ChannelArgs::Set(grpc_arg arg, SourceLocation location) const {
   switch (arg.type) {
     case GRPC_ARG_INTEGER:
       return Set(arg.key, arg.value.integer, location);
     case GRPC_ARG_STRING:
-      if (arg.value.string != nullptr)
+      if (arg.value.string != nullptr) {
         return Set(arg.key, arg.value.string, location);
+      }
       return Set(arg.key, "", location);
     case GRPC_ARG_POINTER:
       return Set(arg.key,
@@ -145,7 +148,7 @@ ChannelArgs ChannelArgs::Set(grpc_arg arg,
 }
 
 ChannelArgs ChannelArgs::FromC(const grpc_channel_args* args,
-                               grpc_core::SourceLocation location) {
+                               SourceLocation location) {
   ChannelArgs result;
   if (args != nullptr) {
     for (size_t i = 0; i < args->num_args; i++) {
@@ -181,12 +184,12 @@ ChannelArgs::CPtr ChannelArgs::ToC() const {
 }
 
 ChannelArgs ChannelArgs::Set(absl::string_view name, Pointer value,
-                             grpc_core::SourceLocation location) const {
+                             SourceLocation location) const {
   return Set(name, Value(std::move(value), location));
 }
 
 ChannelArgs ChannelArgs::Set(absl::string_view name, int value,
-                             grpc_core::SourceLocation location) const {
+                             SourceLocation location) const {
   return Set(name, Value(value, location));
 }
 
@@ -198,17 +201,17 @@ ChannelArgs ChannelArgs::Set(absl::string_view name, Value value) const {
 }
 
 ChannelArgs ChannelArgs::Set(absl::string_view name, absl::string_view value,
-                             grpc_core::SourceLocation location) const {
+                             SourceLocation location) const {
   return Set(name, std::string(value), location);
 }
 
 ChannelArgs ChannelArgs::Set(absl::string_view name, const char* value,
-                             grpc_core::SourceLocation location) const {
+                             SourceLocation location) const {
   return Set(name, std::string(value), location);
 }
 
 ChannelArgs ChannelArgs::Set(absl::string_view name, std::string value,
-                             grpc_core::SourceLocation location) const {
+                             SourceLocation location) const {
   return Set(name, Value(std::move(value), location));
 }
 
