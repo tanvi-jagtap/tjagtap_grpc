@@ -1015,8 +1015,7 @@ void Server::Orphan() {
   Unref();
 }
 
-std::vector<ChannelArgs::DebugStrings> Server::ChannelArgsToString()
-const {
+std::vector<ChannelArgs::DebugStrings> Server::ChannelArgsToString() const {
   return channel_args_.DebugString();
 }
 
