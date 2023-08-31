@@ -19,9 +19,8 @@
 #ifndef GRPC_SRC_CORE_LIB_CHANNEL_CHANNEL_ARGS_H
 #define GRPC_SRC_CORE_LIB_CHANNEL_CHANNEL_ARGS_H
 
-#include <grpc/event_engine/event_engine.h>
-#include <grpc/grpc.h>
 #include <grpc/support/port_platform.h>
+
 #include <stddef.h>
 #include <stdint.h>
 
@@ -31,11 +30,16 @@
 #include <string>
 #include <type_traits>
 #include <utility>
-#include <variant>
+#include <vector>
 
 #include "absl/meta/type_traits.h"
 #include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
+#include "absl/types/variant.h"
+
+#include <grpc/event_engine/event_engine.h>
+#include <grpc/grpc.h>
+
 #include "src/core/lib/avl/avl.h"
 #include "src/core/lib/gpr/useful.h"
 #include "src/core/lib/gprpp/debug_location.h"
