@@ -18,14 +18,18 @@
 
 #include "src/core/lib/channel/channel_args.h"
 
+#include <string.h>
+
+#include <map>
+
+#include "gtest/gtest.h"
+
 #include <grpc/grpc.h>
 #include <grpc/grpc_security.h>
 #include <grpc/impl/channel_arg_names.h>
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
-#include <string.h>
 
-#include "gtest/gtest.h"
 #include "src/core/lib/gpr/useful.h"
 #include "src/core/lib/gprpp/notification.h"
 #include "src/core/lib/gprpp/ref_counted.h"
@@ -228,10 +232,9 @@ TEST(ChannelArgsTest, TestForEachChannelArgument) {
       args_2.Set(ptr_key, ChannelArgs::Pointer(ptr, &malloc_vtable));
   ChannelArgs args_4 = args_3.Set(str_key, "bar");
 
-  std::map<absl::string_view, const grpc_core::ChannelArgs::Value*>
-      args_keys;
+  std::map<absl::string_view, const ChannelArgs::Value*> args_keys;
   auto callback = [&args_keys](absl::string_view key,
-                               const grpc_core::ChannelArgs::Value& val) {
+                               const ChannelArgs::Value& val) {
     args_keys[key] = &val;
   };
 

@@ -17,10 +17,8 @@
 #ifndef GRPC_SRC_CORE_LIB_SURFACE_SERVER_H
 #define GRPC_SRC_CORE_LIB_SURFACE_SERVER_H
 
-#include <grpc/grpc.h>
-#include <grpc/slice.h>
 #include <grpc/support/port_platform.h>
-#include <grpc/support/time.h>
+
 #include <stddef.h>
 #include <stdint.h>
 
@@ -33,8 +31,15 @@
 #include <vector>
 
 #include "absl/base/thread_annotations.h"
+#include "absl/functional/function_ref.h"
 #include "absl/status/statusor.h"
+#include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
+
+#include <grpc/grpc.h>
+#include <grpc/slice.h>
+#include <grpc/support/time.h>
+
 #include "src/core/lib/channel/channel_args.h"
 #include "src/core/lib/channel/channel_fwd.h"
 #include "src/core/lib/channel/channel_stack.h"
@@ -123,7 +128,8 @@ class Server : public InternallyRefCounted<Server>,
   const ChannelArgs& channel_args() const { return channel_args_; }
 
   void ForEachChannelArgument(
-      absl::FunctionRef<void(absl::string_view, const grpc_core::ChannelArgs::Value&)> callback) const {
+      absl::FunctionRef<void(absl::string_view, const ChannelArgs::Value&)>
+          callback) const {
     channel_args_.ForEach(callback);
   }
 
