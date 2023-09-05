@@ -17,9 +17,8 @@
 #ifndef GRPC_SRC_CORE_EXT_FILTERS_CLIENT_CHANNEL_CLIENT_CHANNEL_H
 #define GRPC_SRC_CORE_EXT_FILTERS_CLIENT_CHANNEL_CLIENT_CHANNEL_H
 
-#include <grpc/grpc.h>
-#include <grpc/impl/connectivity_state.h>
 #include <grpc/support/port_platform.h>
+
 #include <stddef.h>
 
 #include <atomic>
@@ -31,9 +30,14 @@
 #include "absl/base/thread_annotations.h"
 #include "absl/container/flat_hash_set.h"
 #include "absl/functional/any_invocable.h"
+#include "absl/functional/function_ref.h"
 #include "absl/status/status.h"
 #include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
+
+#include <grpc/grpc.h>
+#include <grpc/impl/connectivity_state.h>
+
 #include "src/core/ext/filters/client_channel/client_channel_factory.h"
 #include "src/core/ext/filters/client_channel/config_selector.h"
 #include "src/core/ext/filters/client_channel/dynamic_filters.h"
@@ -179,11 +183,11 @@ class ClientChannel {
       const RefCountedPtr<SubchannelPoolInterface>& subchannel_pool,
       const std::string& channel_default_authority);
 
-    void ForEachChannelArgument(
-        absl::FunctionRef<void(absl::string_view, const grpc_core::ChannelArgs::Value&)> callback)
-        const {
-      channel_args_.ForEach(callback);
-    }
+  void ForEachChannelArgument(
+      absl::FunctionRef<void(absl::string_view, const ChannelArgs::Value&)>
+          callback) const {
+    channel_args_.ForEach(callback);
+  }
 
  private:
   class CallData;
@@ -216,6 +220,7 @@ class ClientChannel {
                 const absl::Status& /* status */) override;
 
     void Cancel();
+
    private:
     // Adds the watcher to state_tracker_. Consumes the ref that is passed to it
     // from Start().
