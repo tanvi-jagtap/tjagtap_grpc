@@ -18,14 +18,16 @@
 
 #include "src/core/lib/channel/channel_args.h"
 
+#include <string.h>
+
+#include "gtest/gtest.h"
+
 #include <grpc/grpc.h>
 #include <grpc/grpc_security.h>
 #include <grpc/impl/channel_arg_names.h>
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
-#include <string.h>
 
-#include "gtest/gtest.h"
 #include "src/core/lib/gpr/useful.h"
 #include "src/core/lib/gprpp/notification.h"
 #include "src/core/lib/gprpp/ref_counted.h"
@@ -58,7 +60,7 @@ TEST(ChannelArgsTest, SetGetRemove) {
   ChannelArgs e = d.Set("alpha", "beta");
   ChannelArgs f = e.Remove("answer");
   EXPECT_EQ(a.Get("answer"), nullptr);
-  grpc_core::SourceLocation location = grpc_core::SourceLocation();
+  SourceLocation location = SourceLocation();
   EXPECT_EQ(*b.Get("answer"), ChannelArgs::Value(42, location));
   EXPECT_EQ(*c.Get("answer"), ChannelArgs::Value(42, location));
   EXPECT_EQ(c.GetInt("answer"), 42);
