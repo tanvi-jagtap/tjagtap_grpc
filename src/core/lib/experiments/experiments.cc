@@ -174,9 +174,6 @@ const char* const description_wrr_delegate_to_pick_first =
     "Change WRR code to delegate to pick_first as per dualstack backend "
     "design.";
 const char* const additional_constraints_wrr_delegate_to_pick_first = "{}";
-const char* const description_absl_logging =
-    "Replace gpr logging with logging provided by absl.";
-const char* const additional_constraints_absl_logging = "{}";
 #ifdef NDEBUG
 const bool kDefaultForDebugOnly = false;
 #else
@@ -280,8 +277,6 @@ const ExperimentMetadata g_experiment_metadata[] = {
      required_experiments_work_serializer_dispatch, 1, false, true},
     {"wrr_delegate_to_pick_first", description_wrr_delegate_to_pick_first,
      additional_constraints_wrr_delegate_to_pick_first, nullptr, 0, true, true},
-    {"absl_logging", description_absl_logging,
-     additional_constraints_absl_logging, nullptr, 0, true, true},
 };
 
 }  // namespace grpc_core
@@ -438,9 +433,6 @@ const char* const description_wrr_delegate_to_pick_first =
     "Change WRR code to delegate to pick_first as per dualstack backend "
     "design.";
 const char* const additional_constraints_wrr_delegate_to_pick_first = "{}";
-const char* const description_absl_logging =
-    "Replace gpr logging with logging provided by absl.";
-const char* const additional_constraints_absl_logging = "{}";
 #ifdef NDEBUG
 const bool kDefaultForDebugOnly = false;
 #else
@@ -544,8 +536,6 @@ const ExperimentMetadata g_experiment_metadata[] = {
      required_experiments_work_serializer_dispatch, 1, false, true},
     {"wrr_delegate_to_pick_first", description_wrr_delegate_to_pick_first,
      additional_constraints_wrr_delegate_to_pick_first, nullptr, 0, true, true},
-    {"absl_logging", description_absl_logging,
-     additional_constraints_absl_logging, nullptr, 0, true, true},
 };
 
 }  // namespace grpc_core
@@ -702,9 +692,6 @@ const char* const description_wrr_delegate_to_pick_first =
     "Change WRR code to delegate to pick_first as per dualstack backend "
     "design.";
 const char* const additional_constraints_wrr_delegate_to_pick_first = "{}";
-const char* const description_absl_logging =
-    "Replace gpr logging with logging provided by absl.";
-const char* const additional_constraints_absl_logging = "{}";
 #ifdef NDEBUG
 const bool kDefaultForDebugOnly = false;
 #else
@@ -808,8 +795,6 @@ const ExperimentMetadata g_experiment_metadata[] = {
      required_experiments_work_serializer_dispatch, 1, true, true},
     {"wrr_delegate_to_pick_first", description_wrr_delegate_to_pick_first,
      additional_constraints_wrr_delegate_to_pick_first, nullptr, 0, true, true},
-    {"absl_logging", description_absl_logging,
-     additional_constraints_absl_logging, nullptr, 0, true, true},
 };
 
 }  // namespace grpc_core
