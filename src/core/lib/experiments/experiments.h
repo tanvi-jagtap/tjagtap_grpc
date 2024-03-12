@@ -59,7 +59,6 @@ namespace grpc_core {
 #if defined(GRPC_CFSTREAM)
 #define GRPC_EXPERIMENT_IS_INCLUDED_ABSL_BASE64
 inline bool IsAbslBase64Enabled() { return true; }
-#define GRPC_EXPERIMENT_ABSL_LOGGING
 inline bool IsAbslLoggingEnabled() { return false; }
 #ifndef NDEBUG
 #define GRPC_EXPERIMENT_IS_INCLUDED_CALL_STATUS_OVERRIDE_ON_CANCELLATION
@@ -116,13 +115,10 @@ inline bool IsWorkSerializerClearsTimeCacheEnabled() { return true; }
 inline bool IsWorkSerializerDispatchEnabled() { return false; }
 #define GRPC_EXPERIMENT_IS_INCLUDED_WRR_DELEGATE_TO_PICK_FIRST
 inline bool IsWrrDelegateToPickFirstEnabled() { return true; }
-#define GRPC_EXPERIMENT_ABSL_LOGGING
-inline bool IsAbslLoggingEnabled() { return false; }
 
 #elif defined(GPR_WINDOWS)
 #define GRPC_EXPERIMENT_IS_INCLUDED_ABSL_BASE64
 inline bool IsAbslBase64Enabled() { return true; }
-#define GRPC_EXPERIMENT_ABSL_LOGGING
 inline bool IsAbslLoggingEnabled() { return false; }
 #ifndef NDEBUG
 #define GRPC_EXPERIMENT_IS_INCLUDED_CALL_STATUS_OVERRIDE_ON_CANCELLATION
@@ -184,7 +180,6 @@ inline bool IsWrrDelegateToPickFirstEnabled() { return true; }
 #else
 #define GRPC_EXPERIMENT_IS_INCLUDED_ABSL_BASE64
 inline bool IsAbslBase64Enabled() { return true; }
-#define GRPC_EXPERIMENT_ABSL_LOGGING
 inline bool IsAbslLoggingEnabled() { return false; }
 #ifndef NDEBUG
 #define GRPC_EXPERIMENT_IS_INCLUDED_CALL_STATUS_OVERRIDE_ON_CANCELLATION
@@ -293,7 +288,7 @@ enum ExperimentIds {
 inline bool IsAbslBase64Enabled() {
   return IsExperimentEnabled(kExperimentIdAbslBase64);
 }
-#define GRPC_EXPERIMENT_ABSL_LOGGING
+#define GRPC_EXPERIMENT_IS_INCLUDED_ABSL_LOGGING
 inline bool IsAbslLoggingEnabled() {
   return IsExperimentEnabled(kExperimentIdAbslLogging);
 }

@@ -26,6 +26,8 @@
 namespace {
 const char* const description_absl_base64 = "Use abseil base64 functions.";
 const char* const additional_constraints_absl_base64 = "{}";
+const char* const description_absl_logging = "Use abseil logging functions.";
+const char* const additional_constraints_absl_logging = "{}";
 const char* const description_call_status_override_on_cancellation =
     "Avoid overriding call status of successfully finished calls if it races "
     "with cancellation.";
@@ -174,9 +176,6 @@ const char* const description_wrr_delegate_to_pick_first =
     "Change WRR code to delegate to pick_first as per dualstack backend "
     "design.";
 const char* const additional_constraints_wrr_delegate_to_pick_first = "{}";
-const char* const description_absl_logging =
-    "Replace gpr logging with logging provided by absl.";
-const char* const additional_constraints_absl_logging = "{}";
 #ifdef NDEBUG
 const bool kDefaultForDebugOnly = false;
 #else
@@ -189,6 +188,8 @@ namespace grpc_core {
 const ExperimentMetadata g_experiment_metadata[] = {
     {"absl_base64", description_absl_base64, additional_constraints_absl_base64,
      nullptr, 0, true, true},
+    {"absl_logging", description_absl_logging,
+     additional_constraints_absl_logging, nullptr, 0, false, true},
     {"call_status_override_on_cancellation",
      description_call_status_override_on_cancellation,
      additional_constraints_call_status_override_on_cancellation, nullptr, 0,
@@ -280,8 +281,6 @@ const ExperimentMetadata g_experiment_metadata[] = {
      required_experiments_work_serializer_dispatch, 1, false, true},
     {"wrr_delegate_to_pick_first", description_wrr_delegate_to_pick_first,
      additional_constraints_wrr_delegate_to_pick_first, nullptr, 0, true, true},
-    {"absl_logging", description_absl_logging,
-     additional_constraints_absl_logging, nullptr, 0, false, false},
 };
 
 }  // namespace grpc_core
@@ -290,6 +289,8 @@ const ExperimentMetadata g_experiment_metadata[] = {
 namespace {
 const char* const description_absl_base64 = "Use abseil base64 functions.";
 const char* const additional_constraints_absl_base64 = "{}";
+const char* const description_absl_logging = "Use abseil logging functions.";
+const char* const additional_constraints_absl_logging = "{}";
 const char* const description_call_status_override_on_cancellation =
     "Avoid overriding call status of successfully finished calls if it races "
     "with cancellation.";
@@ -438,9 +439,6 @@ const char* const description_wrr_delegate_to_pick_first =
     "Change WRR code to delegate to pick_first as per dualstack backend "
     "design.";
 const char* const additional_constraints_wrr_delegate_to_pick_first = "{}";
-const char* const description_absl_logging =
-    "Replace gpr logging with logging provided by absl.";
-const char* const additional_constraints_absl_logging = "{}";
 #ifdef NDEBUG
 const bool kDefaultForDebugOnly = false;
 #else
@@ -453,6 +451,8 @@ namespace grpc_core {
 const ExperimentMetadata g_experiment_metadata[] = {
     {"absl_base64", description_absl_base64, additional_constraints_absl_base64,
      nullptr, 0, true, true},
+    {"absl_logging", description_absl_logging,
+     additional_constraints_absl_logging, nullptr, 0, false, true},
     {"call_status_override_on_cancellation",
      description_call_status_override_on_cancellation,
      additional_constraints_call_status_override_on_cancellation, nullptr, 0,
@@ -544,8 +544,6 @@ const ExperimentMetadata g_experiment_metadata[] = {
      required_experiments_work_serializer_dispatch, 1, false, true},
     {"wrr_delegate_to_pick_first", description_wrr_delegate_to_pick_first,
      additional_constraints_wrr_delegate_to_pick_first, nullptr, 0, true, true},
-    {"absl_logging", description_absl_logging,
-     additional_constraints_absl_logging, nullptr, 0, false, false},
 };
 
 }  // namespace grpc_core
@@ -554,6 +552,8 @@ const ExperimentMetadata g_experiment_metadata[] = {
 namespace {
 const char* const description_absl_base64 = "Use abseil base64 functions.";
 const char* const additional_constraints_absl_base64 = "{}";
+const char* const description_absl_logging = "Use abseil logging functions.";
+const char* const additional_constraints_absl_logging = "{}";
 const char* const description_call_status_override_on_cancellation =
     "Avoid overriding call status of successfully finished calls if it races "
     "with cancellation.";
@@ -702,9 +702,6 @@ const char* const description_wrr_delegate_to_pick_first =
     "Change WRR code to delegate to pick_first as per dualstack backend "
     "design.";
 const char* const additional_constraints_wrr_delegate_to_pick_first = "{}";
-const char* const description_absl_logging =
-    "Replace gpr logging with logging provided by absl.";
-const char* const additional_constraints_absl_logging = "{}";
 #ifdef NDEBUG
 const bool kDefaultForDebugOnly = false;
 #else
@@ -717,6 +714,8 @@ namespace grpc_core {
 const ExperimentMetadata g_experiment_metadata[] = {
     {"absl_base64", description_absl_base64, additional_constraints_absl_base64,
      nullptr, 0, true, true},
+    {"absl_logging", description_absl_logging,
+     additional_constraints_absl_logging, nullptr, 0, false, true},
     {"call_status_override_on_cancellation",
      description_call_status_override_on_cancellation,
      additional_constraints_call_status_override_on_cancellation, nullptr, 0,
@@ -808,8 +807,6 @@ const ExperimentMetadata g_experiment_metadata[] = {
      required_experiments_work_serializer_dispatch, 1, true, true},
     {"wrr_delegate_to_pick_first", description_wrr_delegate_to_pick_first,
      additional_constraints_wrr_delegate_to_pick_first, nullptr, 0, true, true},
-    {"absl_logging", description_absl_logging,
-     additional_constraints_absl_logging, nullptr, 0, false, false},
 };
 
 }  // namespace grpc_core
