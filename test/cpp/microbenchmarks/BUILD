@@ -212,12 +212,12 @@ grpc_cc_test(
     name = "bm_byte_buffer",
     srcs = ["bm_byte_buffer.cc"],
     args = grpc_benchmark_args(),
+    external_deps = [
+        "absl/log:check",
+    ],
     tags = [
         "no_mac",
         "no_windows",
-    ],
-    external_deps = [
-        "absl/log:check",
     ],
     uses_event_engine = False,
     uses_polling = False,
@@ -241,12 +241,12 @@ grpc_cc_test(
     name = "bm_cq",
     srcs = ["bm_cq.cc"],
     args = grpc_benchmark_args(),
+    external_deps = [
+        "absl/log:check",
+    ],
     tags = [
         "no_mac",
         "no_windows",
-    ],
-    external_deps = [
-        "absl/log:check",
     ],
     deps = [":helpers"],
 )
@@ -255,12 +255,12 @@ grpc_cc_test(
     name = "bm_cq_multiple_threads",
     srcs = ["bm_cq_multiple_threads.cc"],
     args = grpc_benchmark_args(),
+    external_deps = [
+        "absl/log:check",
+    ],
     tags = [
         "no_mac",
         "no_windows",
-    ],
-    external_deps = [
-        "absl/log:check",
     ],
     uses_event_engine = False,
     uses_polling = False,
@@ -370,12 +370,12 @@ grpc_cc_test(
     name = "bm_chttp2_hpack",
     srcs = ["bm_chttp2_hpack.cc"],
     args = grpc_benchmark_args(),
+    external_deps = [
+        "absl/log:check",
+    ],
     tags = [
         "no_mac",
         "no_windows",
-    ],
-    external_deps = [
-        "absl/log:check",
     ],
     uses_event_engine = False,
     uses_polling = False,
@@ -389,13 +389,13 @@ grpc_cc_test(
     name = "bm_chttp2_transport",
     srcs = ["bm_chttp2_transport.cc"],
     args = grpc_benchmark_args(),
+    external_deps = [
+        "absl/log:check",
+    ],
     tags = [
         "no_mac",
         "no_windows",
         "nomsan",
-    ],
-    external_deps = [
-        "absl/log:check",
     ],
     deps = [
         ":helpers",
@@ -501,7 +501,7 @@ grpc_cc_test(
     args = grpc_benchmark_args(),
     external_deps = [
         "absl/log:check",
-        "benchmark"
+        "benchmark",
     ],
     tags = [
         "manual",
