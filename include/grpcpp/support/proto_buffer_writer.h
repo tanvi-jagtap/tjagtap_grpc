@@ -93,7 +93,7 @@ class ProtoBufferWriter : public grpc::protobuf::io::ZeroCopyOutputStream {
       /// If we have a backup slice, we should use it first
       slice_ = backup_slice_;
       have_backup_ = false;
-      if (GRPC_SLICE_LENGTH(slice_) > remain) {
+      if (GRPC_SLICE_LENGTH(Slice) > remain) {
         GRPC_SLICE_SET_LENGTH(slice_, remain);
       }
     } else {
