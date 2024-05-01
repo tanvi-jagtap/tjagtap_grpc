@@ -36,7 +36,6 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-#include "absl/log/check.h"
 #endif
 
 #include <memory>
@@ -51,7 +50,6 @@
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 
-#include "absl/log/check.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
