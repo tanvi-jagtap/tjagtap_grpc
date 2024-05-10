@@ -1214,7 +1214,7 @@ struct SeqState<Traits, P, F0, F1, F2, F3, F4> {
       default:
       case State::kState5: {
         if (grpc_trace_promise_primitives.enabled()) {
-          LOG(INFO).At
+          LOG(INFO).At;
         }
         auto result = current_promise();
         if (grpc_trace_promise_primitives.enabled()) {
