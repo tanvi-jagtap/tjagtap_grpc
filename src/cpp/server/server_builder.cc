@@ -459,7 +459,8 @@ std::unique_ptr<grpc::Server> ServerBuilder::BuildAndStart() {
   }
 
   if (!has_frequently_polled_cqs) {
-    LOG(ERROR) << "At least one of the completion queues must be frequently polled";
+    LOG(ERROR)
+        << "At least one of the completion queues must be frequently polled";
     return nullptr;
   }
 
