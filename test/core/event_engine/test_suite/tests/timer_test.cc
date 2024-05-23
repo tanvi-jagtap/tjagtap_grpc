@@ -197,8 +197,8 @@ TEST_F(EventEngineTimerTest, StressTestTimersNotCalledBeforeScheduled) {
     cv_.Wait(&mu_);
   }
   if (failed_call_count.load() != 0) {
-    VLOG(2) << "failed timer count: " << failed_call_count.load() << " of "
-            thread_count * call_count);
+    VLOG(2) << "failed timer count: " << failed_call_count.load() << " of ";
+    thread_count* call_count;
   }
   ASSERT_EQ(0, failed_call_count.load());
 }
