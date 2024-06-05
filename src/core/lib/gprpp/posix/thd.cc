@@ -34,7 +34,6 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"  // IWYU pragma: keep
-#include "absl/log/log.h"
 
 #include <grpc/support/sync.h>
 #include <grpc/support/thd_id.h>
