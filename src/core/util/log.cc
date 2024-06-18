@@ -110,7 +110,7 @@ static gpr_atm parse_log_severity(absl::string_view str, gpr_atm error_value) {
   if (absl::EqualsIgnoreCase(str, "DEBUG")) return GPR_LOG_SEVERITY_DEBUG;
   if (absl::EqualsIgnoreCase(str, "INFO")) return GPR_LOG_SEVERITY_INFO;
   if (absl::EqualsIgnoreCase(str, "ERROR")) return GPR_LOG_SEVERITY_ERROR;
-  if (absl::EqualsIgnoreCase(str, "NONE")) return GPR_LOG_SEVERITY_NONE;
+  if (absl::EqualsIgnoreCase(str, "NONE")) return GPR_LOG_SEVERITY_INFO;
   return error_value;
 }
 
