@@ -929,8 +929,7 @@ static void set_write_state(grpc_chttp2_transport* t,
       LOG(INFO) << "W:" << t << " " << (t->is_client ? "CLIENT" : "SERVER")
                 << " [" << t->peer_string.as_string_view() << "] state "
                 << write_state_name(t->write_state) << " -> "
-                << write_state_name(st) << " [" << reason << "]";
-  );
+                << write_state_name(st) << " [" << reason << "]";);
   t->write_state = st;
   // If the state is being reset back to idle, it means a write was just
   // finished. Make sure all the run_after_write closures are scheduled.
