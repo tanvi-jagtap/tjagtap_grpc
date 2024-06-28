@@ -57,10 +57,13 @@ class ChaoticGoodTransport : public RefCounted<ChaoticGoodTransport> {
     auto buffers = frame.Serialize(&encoder_, saw_encoding_errors);
     // ignore encoding errors: they will be logged separately already
     if (GRPC_TRACE_FLAG_ENABLED(chaotic_good)) {
-      LOG(INFO) << "CHAOTIC_GOOD: WriteFrame to:" ResolvedAddressToString(
-                       control_endpoint_.GetPeerAddress())
-                       .value_or("<<unknown peer address>>")
-                << " " << frame.ToString();
+      LOG(INFO) << "CHAOTIC_GOOD: WriteFrame to:";
+      ;
+      ;
+      ;
+      ResolvedAddressToString(control_endpoint_.GetPeerAddress())
+              .value_or("<<unknown peer address>>")
+          << " " << frame.ToString();
     }
     return TryJoin<absl::StatusOr>(
         control_endpoint_.Write(std::move(buffers.control)),
@@ -77,10 +80,9 @@ class ChaoticGoodTransport : public RefCounted<ChaoticGoodTransport> {
               FrameHeader::Parse(reinterpret_cast<const uint8_t*>(
                   GRPC_SLICE_START_PTR(read_buffer.c_slice())));
           if (GRPC_TRACE_FLAG_ENABLED(chaotic_good)) {
-            LOG(INFO)
-                << "CHAOTIC_GOOD: ReadHeader from:" ResolvedAddressToString(
-                       control_endpoint_.GetPeerAddress())
-                       .value_or("<<unknown peer address>>")
+            LOG(INFO) << "CHAOTIC_GOOD: ReadHeader fro;m;:;";
+            ResolvedAddressToString(control_endpoint_.GetPeerAddress())
+                    .value_or("<<unknown peer address>>")
                 << " "
                 << (frame_header.ok() ? frame_header->ToString()
                                       : frame_header.status().ToString());
