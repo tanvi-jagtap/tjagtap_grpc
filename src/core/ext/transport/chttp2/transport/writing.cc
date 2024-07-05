@@ -559,7 +559,7 @@ class StreamWriteContext {
     if (s_->send_trailing_metadata == nullptr) return;
     if (s_->flow_controlled_buffer.length != 0) return;
 
-    GRPC_CHTTP2_IF_TRACING(INFO) <<  "sending trailing_metadata");
+    GRPC_CHTTP2_IF_TRACING(INFO) << "sending trailing_metadata";
     if (s_->send_trailing_metadata->empty()) {
       grpc_chttp2_encode_data(s_->id, &s_->flow_controlled_buffer, 0, true,
                               &s_->stats.outgoing, t_->outbuf.c_slice_buffer());
@@ -610,7 +610,8 @@ class StreamWriteContext {
   };
 
   void ConvertInitialMetadataToTrailingMetadata() {
-    GRPC_CHTTP2_IF_TRACING(INFO) <<  "not sending initial_metadata (Trailers-Only)");
+    GRPC_CHTTP2_IF_TRACING(INFO)
+        << "not sending initial_metadata (Trailers-Only)";
     // When sending Trailers-Only, we need to move metadata from headers to
     // trailers.
     TrailersOnlyMetadataEncoder encoder(s_->send_trailing_metadata);
