@@ -483,7 +483,7 @@ static void on_failed(bidirectional_stream* stream, int net_error) {
 // Cronet callback
 //
 static void on_canceled(bidirectional_stream* stream) {
-  CRONET_LOG(2) <<  "on_canceled(%p)", stream);
+  CRONET_LOG(2) << "on_canceled(%p)", stream;
   grpc_core::ApplicationCallbackExecCtx callback_exec_ctx;
   grpc_core::ExecCtx exec_ctx;
 
