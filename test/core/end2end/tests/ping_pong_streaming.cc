@@ -28,18 +28,19 @@ namespace grpc_core {
 
 class VerifyLogNoiseLogSink1 : public absl::LogSink {
  public:
-  explicit VerifyLogNoiseLogSink(const absl::LogSeverityAtLeast severity,
-                                 const int verbosity)
+  explicit VerifyLogNoiseLogSink1(const absl::LogSeverityAtLeast severity,
+                                  const int verbosity)
       : log_noise_absent_(true) {
     saved_absl_severity_ = absl::MinLogLevel();
     absl::SetMinLogLevel(severity);
     // SetGlobalVLogLevel sets verbosity and returns previous verbosity.
-    saved_absl_verbosity_ = absl::SetGlobalVLogLevel(verbosity);
+    saved_absl_verbosity_ =
+        absl::log_internal::UpdateGlobalVLogLevel(verbosity);
     grpc_tracer_set_enabled("all", false);
     absl::AddLogSink(this);
   }
 
-  ~VerifyLogNoiseLogSink() override {
+  ~VerifyLogNoiseLogSink1() override {
     CHECK(log_noise_absent_)
         << "Unwanted logs present. This will cause log noise. Either user a "
            "tracer (example GRPC_TRACE_LOG or GRPC_TRACE_VLOG) or convert the "
@@ -55,7 +56,8 @@ class VerifyLogNoiseLogSink1 : public absl::LogSink {
   void Send(const absl::LogEntry& entry) override { CheckForNoisyLogs(entry); }
 
   VerifyLogNoiseLogSink(const VerifyLogNoiseLogSink& other) = delete;
-  VerifyLogNoiseLogSink& operator=(const VerifyLogNoiseLogSink& other) = delete;
+  VerifyLogNoiseLogSink1& operator=(const VerifyLogNoiseLogSink1& other) =
+      delete;
 
  private:
   bool IsVlogWithVerbosityMoreThan1(const absl::LogEntry& entry) const {
@@ -102,7 +104,7 @@ class VerifyLogNoiseLogSink1 : public absl::LogSink {
     }
     auto it = allowed_logs_by_module->find(filename);
     if (it != allowed_logs_by_module->end() &&
-        std::regex_search(std::string(entry.text_message()), it->second)) {
+        re_search(std::string(entry.text_message()), it->second)) {
       return;
     }
 
