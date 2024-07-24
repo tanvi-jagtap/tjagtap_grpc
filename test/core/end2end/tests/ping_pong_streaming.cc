@@ -110,7 +110,7 @@ class VerifyLogNoiseLogSink1 : public absl::LogSink {
     }
     auto it = allowed_logs_by_module->find(filename);
     if (it != allowed_logs_by_module->end() &&
-        std::regex_search(std::string(entry.text_message()), it->second)) {
+        re_search(std::string(entry.text_message()), it->second)) {
       return;
     }
 
