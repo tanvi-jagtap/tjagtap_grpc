@@ -34,7 +34,8 @@ class VerifyLogNoiseLogSink1 : public absl::LogSink {
     saved_absl_severity_ = absl::MinLogLevel();
     absl::SetMinLogLevel(severity);
     // SetGlobalVLogLevel sets verbosity and returns previous verbosity.
-    saved_absl_verbosity_ = absl::SetGlobalVLogLevel(verbosity);
+    saved_absl_verbosity_ =
+        absl::log_internal::UpdateGlobalVLogLevel(verbosity);
     grpc_tracer_set_enabled("all", false);
     absl::AddLogSink(this);
   }
@@ -103,7 +104,7 @@ class VerifyLogNoiseLogSink1 : public absl::LogSink {
     }
     auto it = allowed_logs_by_module->find(filename);
     if (it != allowed_logs_by_module->end() &&
-        std::regex_search(std::string(entry.text_message()), it->second)) {
+        re_search(std::string(entry.text_message()), it->second)) {
       return;
     }
 
