@@ -1182,11 +1182,12 @@ void GrpcLb::BalancerCallState::OnBalancerMessageReceivedLocked() {
                       << client_stats_report_interval_.millis()
                       << " milliseconds";
           }
-        } else
+        } else {
           GRPC_TRACE_LOG(glb, INFO)
               << "[grpclb " << grpclb_policy() << "] lb_calld=" << this
               << ": Received initial LB response message; client load "
                  "reporting NOT enabled";
+        }
         seen_initial_response_ = true;
         break;
       }
