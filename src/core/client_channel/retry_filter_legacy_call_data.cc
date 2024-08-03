@@ -1538,7 +1538,7 @@ RetryFilter::LegacyCallData::~LegacyCallData() {
 
 void RetryFilter::LegacyCallData::StartTransportStreamOpBatch(
     grpc_transport_stream_op_batch* batch) {
-  GRPC_TRACE_LOG(retry) &&
+  _SC_TRACE_LOG(retry) &&
       !GRPC_TRACE_FLAG_ENABLED(channel, INFO)
           << "chand=" << chand_ << " calld=" << this
           << ": batch started from surface: "
