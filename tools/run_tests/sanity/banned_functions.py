@@ -37,7 +37,8 @@ os.chdir(os.path.join(os.path.dirname(sys.argv[0]), "../../.."))
 
 # More files may be added to the RUBY_PHP_ALLOW_LIST
 # if they belong to the PHP or RUBY folder.
-RUBY_PHP_ALLOW_LIST = [
+RUBY_PHP_ALLOW_LIST = (
+    [
         "./include/grpc/support/log.h",
         "./src/core/util/log.cc",
         "./src/php/ext/grpc/call_credentials.c",
@@ -48,20 +49,20 @@ RUBY_PHP_ALLOW_LIST = [
         "./src/ruby/ext/grpc/rb_event_thread.c",
         "./src/ruby/ext/grpc/rb_grpc.c",
         "./src/ruby/ext/grpc/rb_server.c",
-],
+    ],
+)
 
 #  Map of deprecated functions to allowlist files
 DEPRECATED_FUNCTION_TEMP_ALLOW_LIST = {
     # These logging functions are only for php and ruby.
-    "grpc_absl_log_error(" : RUBY_PHP_ALLOW_LIST,
-    "grpc_absl_log_info(" : RUBY_PHP_ALLOW_LIST,
-    "grpc_absl_log_info_int(" : RUBY_PHP_ALLOW_LIST,
-    "grpc_absl_log_info_str(" : RUBY_PHP_ALLOW_LIST,
-    "grpc_absl_vlog(" : RUBY_PHP_ALLOW_LIST,
-    "grpc_absl_vlog2_enabled(" : RUBY_PHP_ALLOW_LIST,
-    "grpc_absl_vlog_int(" : RUBY_PHP_ALLOW_LIST,
-    "grpc_absl_vlog_str(" : RUBY_PHP_ALLOW_LIST,
-
+    "grpc_absl_log_error(": RUBY_PHP_ALLOW_LIST,
+    "grpc_absl_log_info(": RUBY_PHP_ALLOW_LIST,
+    "grpc_absl_log_info_int(": RUBY_PHP_ALLOW_LIST,
+    "grpc_absl_log_info_str(": RUBY_PHP_ALLOW_LIST,
+    "grpc_absl_vlog(": RUBY_PHP_ALLOW_LIST,
+    "grpc_absl_vlog2_enabled(": RUBY_PHP_ALLOW_LIST,
+    "grpc_absl_vlog_int(": RUBY_PHP_ALLOW_LIST,
+    "grpc_absl_vlog_str(": RUBY_PHP_ALLOW_LIST,
     # These have been deprecated.
     # Most of these have been deleted.
     # Putting this check here just to prevent people from
@@ -75,7 +76,6 @@ DEPRECATED_FUNCTION_TEMP_ALLOW_LIST = {
     "gpr_set_log_function": [],
     "gpr_set_log_verbosity": [],
     "gpr_should_log": [],
-
     # These macros have been deprecated.
     # Most of these have been deleted.
     # Putting this check here just to prevent people from
