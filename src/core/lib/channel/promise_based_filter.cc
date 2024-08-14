@@ -979,10 +979,10 @@ class ClientCallData::PollContext {
  public:
   explicit PollContext(ClientCallData* self, Flusher* flusher)
       : self_(self), flusher_(flusher) {
-    CHECK_EQ(self_->poll_ctx_, nullptr);
+    CHECK_EQ(self->poll_ctx_, nullptr);
 
-    self_->poll_ctx_ = this;
-    scoped_activity_.Init(self_);
+    self->poll_ctx_ = this;
+    scoped_activity_.Init(self);
     have_scoped_activity_ = true;
   }
 
@@ -1246,7 +1246,7 @@ class ClientCallData::PollContext {
   Flusher* flusher_;
   bool repoll_ = false;
   bool have_scoped_activity_;
-};
+}  // namespace promise_filter_detail;
 
 ClientCallData::ClientCallData(grpc_call_element* elem,
                                const grpc_call_element_args* args,
@@ -2477,7 +2477,7 @@ void ServerCallData::WakeInsideCombiner(Flusher* flusher) {
           break;
       }
     }
-  }
+  }  // namespace grpc_core
   if (std::exchange(forward_recv_initial_metadata_callback_, false)) {
     if (auto* closure =
             std::exchange(original_recv_initial_metadata_ready_, nullptr)) {
