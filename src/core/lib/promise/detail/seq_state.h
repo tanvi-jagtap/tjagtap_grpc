@@ -182,12 +182,13 @@ struct SeqState<Traits, P, F0> {
         return Result(std::move(*p));
     }
   }
-}
 };
+;
+}  // namespace promise_detail;
 
-template <template <typename> class Traits, typename P, typename F0,
-          typename F1>
-struct SeqState<Traits, P, F0, F1> {
+template <template <typename> class Traits, typename P,
+          typenampromise_detailename F1>
+promise_detailts, P, F0, F1 > {
   using Promise0 = PromiseLike<P>;
   using PromiseResult0 = typename Promise0::Result;
   using PromiseResultTraits0 = Traits<PromiseResult0>;
@@ -221,7 +222,7 @@ struct SeqState<Traits, P, F0, F1> {
   GPR_NO_UNIQUE_ADDRESS State state = State::kState0;
   GPR_NO_UNIQUE_ADDRESS DebugLocation whence;
 
-  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(P&& p, F0&& f0, F1&& f1,
+  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(P && p, F0 && f0, F1 && f1,
                                                 DebugLocation whence) noexcept
       : whence(whence) {
     Construct(&prior.prior.current_promise, std::forward<P>(p));
@@ -253,7 +254,7 @@ struct SeqState<Traits, P, F0, F1> {
     Construct(&prior.next_factory, other.prior.next_factory);
   }
   SeqState& operator=(const SeqState& other) = delete;
-  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(SeqState&& other) noexcept
+  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(SeqState && other) noexcept
       : state(other.state), whence(other.whence) {
     DCHECK(state == State::kState0);
     Construct(&prior.prior.current_promise,
@@ -343,214 +344,220 @@ struct SeqState<Traits, P, F0, F1> {
 }
 };
 
-template <template <typename> class Traits, typename P, typename F0,
-          typename F1, typename F2>
-struct SeqState<Traits, P, F0, F1, F2> {
-  using Promise0 = PromiseLike<P>;
-  using PromiseResult0 = typename Promise0::Result;
-  using PromiseResultTraits0 = Traits<PromiseResult0>;
-  using NextFactory0 =
-      OncePromiseFactory<typename PromiseResultTraits0::UnwrappedType, F0>;
-  using Promise1 = typename NextFactory0::Promise;
-  using PromiseResult1 = typename Promise1::Result;
-  using PromiseResultTraits1 = Traits<PromiseResult1>;
-  using NextFactory1 =
-      OncePromiseFactory<typename PromiseResultTraits1::UnwrappedType, F1>;
-  using Promise2 = typename NextFactory1::Promise;
-  using PromiseResult2 = typename Promise2::Result;
-  using PromiseResultTraits2 = Traits<PromiseResult2>;
-  using NextFactory2 =
-      OncePromiseFactory<typename PromiseResultTraits2::UnwrappedType, F2>;
-  using Promise3 = typename NextFactory2::Promise;
-  using PromiseResult3 = typename Promise3::Result;
-  using PromiseResultTraits3 = Traits<PromiseResult3>;
-  using Result = typename PromiseResultTraits3::WrappedType;
-  struct Running0 {
-    GPR_NO_UNIQUE_ADDRESS Promise0 current_promise;
-    GPR_NO_UNIQUE_ADDRESS NextFactory0 next_factory;
-  };
-  struct Running1 {
-    union {
-      GPR_NO_UNIQUE_ADDRESS Running0 prior;
-      GPR_NO_UNIQUE_ADDRESS Promise1 current_promise;
-    };
-    GPR_NO_UNIQUE_ADDRESS NextFactory1 next_factory;
-  };
-  struct Running2 {
-    union {
-      GPR_NO_UNIQUE_ADDRESS Running1 prior;
-      GPR_NO_UNIQUE_ADDRESS Promise2 current_promise;
-    };
-    GPR_NO_UNIQUE_ADDRESS NextFactory2 next_factory;
-  };
+tmtmnamtmcetmc_corepl;
+ate < template <typename>
+      class Traits,
+    typename P, typename F0, typename F1, type;
+name;
+F2 > s;
+truct grpc_cgrpc_cgrpc_core::promise_detail::SeqStatemise_detail::
+    SeqStatemise_detail::SeqStatee::promise_detail::grpc_core::promise_detail::
+        PromiseLikeaits,
+    P, F0, F1,
+    F2 > grpc_core::promise_detail::PromiseLikeromise0 = PromiseLike<P>;
+using PromiseResult0 = typename Promise0::Result;
+usgrpc_core::promise_detail::OncePromiseFactoryraits0 = Traits<PromiseResult0>;
+using grpc_core::promise_detail::OncePromiseFactory
+    OncePromiseFactory<typename PromiseResultTraits0::UnwrappedType, F0>;
+using Promise1 = typename NextFactory0::Promise;
+using PromiseResult1 = typegrpc_core::promise_detail::OncePromiseFactoryult;
+using PromiseResultTraits1 = Traits<PromiseResult1>;
+using grpc_core::promise_detail::OncePromiseFactory
+    OncePromiseFactory<typename PromiseResultTraits1::UnwrappedType, F1>;
+using Promise2 = typename NextFactory1::Promise;
+using PromiseResult2 = typename Promise2::Result;
+using PromiseResultTraits2 = Traits<PromiseResult2>;
+using NextFactory2 =
+    OncePromiseFactory<typename PromiseResultTraits2::UnwrappedType, F2>;
+using Promise3 = typename NextFactory2::Promise;
+using PromiseResult3 = typename Promise3::Result;
+using PromiseResultTraits3 = Traits<PromiseResult3>;
+using Result = typename PromiseResultTraits3::WrappedType;
+struct Running0 {
+  GPR_NO_UNIQUE_ADDRESS Promise0 current_promise;
+  GPR_NO_UNIQUE_ADDRESS NextFactory0 next_factory;
+};
+struct Running1 {
   union {
-    GPR_NO_UNIQUE_ADDRESS Running2 prior;
-    GPR_NO_UNIQUE_ADDRESS Promise3 current_promise;
+    GPR_NO_UNIQUE_ADDRESS Running0 prior;
+    GPR_NO_UNIQUE_ADDRESS Promise1 current_promise;
   };
-  enum class State : uint8_t { kState0, kState1, kState2, kState3 };
-  GPR_NO_UNIQUE_ADDRESS State state = State::kState0;
-  GPR_NO_UNIQUE_ADDRESS DebugLocation whence;
+  GPR_NO_UNIQUE_ADDRESS NextFactory1 next_factory;
+};
+struct Running2 {
+  union {
+    GPR_NO_UNIQUE_ADDRESS Running1 prior;
+    GPR_NO_UNIQUE_ADDRESS Promise2 current_promise;
+  };
+  GPR_NO_UNIQUE_ADDRESS NextFactory2 next_factory;
+};
+union {
+  GPR_NO_UNIQUE_ADDRESS Running2 prior;
+  GPR_NO_UNIQUE_ADDRESS Promise3 current_promise;
+};
+enum class State : uint8_t { kState0, kState1, kState2, kState3 };
+GPR_NO_UNIQUE_ADDRESS State state = State::kState0;
+GPR_NO_UNIQUE_ADDRESS DebugLocation whence;
 
-  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(P&& p, F0&& f0, F1&& f1,
-                                                F2&& f2,
-                                                DebugLocation whence) noexcept
-      : whence(whence) {
-    Construct(&prior.prior.prior.current_promise, std::forward<P>(p));
-    Construct(&prior.prior.prior.next_factory, std::forward<F0>(f0));
-    Construct(&prior.prior.next_factory, std::forward<F1>(f1));
-    Construct(&prior.next_factory, std::forward<F2>(f2));
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(P&& p, F0&& f0, F1&& f1, F2&& f2,
+                                              DebugLocation whence) noexcept
+    : whence(whence) {
+  Construct(&prior.prior.prior.current_promise, std::forward<P>(p));
+  Construct(&prior.prior.prior.next_factory, std::forward<F0>(f0));
+  Construct(&prior.prior.next_factory, std::forward<F1>(f1));
+  Construct(&prior.next_factory, std::forward<F2>(f2));
+}
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION ~SeqState() {
+  switch (state) {
+    case State::kState0:
+      Destruct(&prior.prior.prior.current_promise);
+      goto tail0;
+    case State::kState1:
+      Destruct(&prior.prior.current_promise);
+      goto tail1;
+    case State::kState2:
+      Destruct(&prior.current_promise);
+      goto tail2;
+    case State::kState3:
+      Destruct(&current_promise);
+      return;
   }
-  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION ~SeqState() {
-    switch (state) {
-      case State::kState0:
-        Destruct(&prior.prior.prior.current_promise);
-        goto tail0;
-      case State::kState1:
-        Destruct(&prior.prior.current_promise);
-        goto tail1;
-      case State::kState2:
-        Destruct(&prior.current_promise);
-        goto tail2;
-      case State::kState3:
-        Destruct(&current_promise);
-        return;
+tail0:
+  Destruct(&prior.prior.prior.next_factory);
+tail1:
+  Destruct(&prior.prior.next_factory);
+tail2:
+  Destruct(&prior.next_factory);
+}
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(const SeqState& other) noexcept
+    : state(other.state), whence(other.whence) {
+  DCHECK(state == State::kState0);
+  Construct(&prior.prior.prior.current_promise,
+            other.prior.prior.prior.current_promise);
+  Construct(&prior.prior.prior.next_factory,
+            other.prior.prior.prior.next_factory);
+  Construct(&prior.prior.next_factory, other.prior.prior.next_factory);
+  Construct(&prior.next_factory, other.prior.next_factory);
+}
+SeqState& operator=(const SeqState& other) = delete;
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(SeqState&& other) noexcept
+    : state(other.state), whence(other.whence) {
+  DCHECK(state == State::kState0);
+  Construct(&prior.prior.prior.current_promise,
+            std::move(other.prior.prior.prior.current_promise));
+  Construct(&prior.prior.prior.next_factory,
+            std::move(other.prior.prior.prior.next_factory));
+  Construct(&prior.prior.next_factory,
+            std::move(other.prior.prior.next_factory));
+  Construct(&prior.next_factory, std::move(other.prior.next_factory));
+}
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState& operator=(SeqState&& other) =
+    delete;
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<Result> PollOnce() {
+  switch (state) {
+    case State::kState0: {
+      GRPC_TRACE_LOG(promise_primitives, 2)
+              .AtLocation(whence.file(), whence.line())
+          << "seq[" << this << "]: begin poll step 1/4";
+      auto result = prior.prior.prior.current_promise();
+      PromiseResult0* p = result.value_if_ready();
+      GRPC_TRACE_LOG(promise_primitives, 2)
+              .AtLocation(whence.file(), whence.line())
+          << "seq[" << this << "]: poll step 1/4 gets "
+          << (p != nullptr
+                  ? (PromiseResultTraits0::IsOk(*p)
+                         ? "ready"
+                         : absl::StrCat("early-error:",
+                                        PromiseResultTraits0::ErrorString(*p))
+                               .c_str())
+                  : "pending");
+      if (p == nullptr) return Pending{};
+      if (!PromiseResultTraits0::IsOk(*p)) {
+        return PromiseResultTraits0::template ReturnValue<Result>(
+            std::move(*p));
+      }
+      Destruct(&prior.prior.prior.current_promise);
+      auto next_promise = PromiseResultTraits0::CallFactory(
+          &prior.prior.prior.next_factory, std::move(*p));
+      Destruct(&prior.prior.prior.next_factory);
+      Construct(&prior.prior.current_promise, std::move(next_promise));
+      state = State::kState1;
     }
-  tail0:
-    Destruct(&prior.prior.prior.next_factory);
-  tail1:
-    Destruct(&prior.prior.next_factory);
-  tail2:
-    Destruct(&prior.next_factory);
-  }
-  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(const SeqState& other) noexcept
-      : state(other.state), whence(other.whence) {
-    DCHECK(state == State::kState0);
-    Construct(&prior.prior.prior.current_promise,
-              other.prior.prior.prior.current_promise);
-    Construct(&prior.prior.prior.next_factory,
-              other.prior.prior.prior.next_factory);
-    Construct(&prior.prior.next_factory, other.prior.prior.next_factory);
-    Construct(&prior.next_factory, other.prior.next_factory);
-  }
-  SeqState& operator=(const SeqState& other) = delete;
-  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState(SeqState&& other) noexcept
-      : state(other.state), whence(other.whence) {
-    DCHECK(state == State::kState0);
-    Construct(&prior.prior.prior.current_promise,
-              std::move(other.prior.prior.prior.current_promise));
-    Construct(&prior.prior.prior.next_factory,
-              std::move(other.prior.prior.prior.next_factory));
-    Construct(&prior.prior.next_factory,
-              std::move(other.prior.prior.next_factory));
-    Construct(&prior.next_factory, std::move(other.prior.next_factory));
-  }
-  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION SeqState& operator=(SeqState&& other) =
-      delete;
-  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<Result> PollOnce() {
-    switch (state) {
-      case State::kState0: {
-        GRPC_TRACE_LOG(promise_primitives, 2)
-                .AtLocation(whence.file(), whence.line())
-            << "seq[" << this << "]: begin poll step 1/4";
-        auto result = prior.prior.prior.current_promise();
-        PromiseResult0* p = result.value_if_ready();
-        GRPC_TRACE_LOG(promise_primitives, 2)
-                .AtLocation(whence.file(), whence.line())
-            << "seq[" << this << "]: poll step 1/4 gets "
-            << (p != nullptr
-                    ? (PromiseResultTraits0::IsOk(*p)
-                           ? "ready"
-                           : absl::StrCat("early-error:",
-                                          PromiseResultTraits0::ErrorString(*p))
-                                 .c_str())
-                    : "pending");
-        if (p == nullptr) return Pending{};
-        if (!PromiseResultTraits0::IsOk(*p)) {
-          return PromiseResultTraits0::template ReturnValue<Result>(
-              std::move(*p));
-        }
-        Destruct(&prior.prior.prior.current_promise);
-        auto next_promise = PromiseResultTraits0::CallFactory(
-            &prior.prior.prior.next_factory, std::move(*p));
-        Destruct(&prior.prior.prior.next_factory);
-        Construct(&prior.prior.current_promise, std::move(next_promise));
-        state = State::kState1;
+      ABSL_FALLTHROUGH_INTENDED;
+    case State::kState1: {
+      GRPC_TRACE_LOG(promise_primitives, 2)
+              .AtLocation(whence.file(), whence.line())
+          << "seq[" << this << "]: begin poll step 2/4";
+      auto result = prior.prior.current_promise();
+      PromiseResult1* p = result.value_if_ready();
+      GRPC_TRACE_LOG(promise_primitives, 2)
+              .AtLocation(whence.file(), whence.line())
+          << "seq[" << this << "]: poll step 2/4 gets "
+          << (p != nullptr
+                  ? (PromiseResultTraits1::IsOk(*p)
+                         ? "ready"
+                         : absl::StrCat("early-error:",
+                                        PromiseResultTraits1::ErrorString(*p))
+                               .c_str())
+                  : "pending");
+      if (p == nullptr) return Pending{};
+      if (!PromiseResultTraits1::IsOk(*p)) {
+        return PromiseResultTraits1::template ReturnValue<Result>(
+            std::move(*p));
       }
-        ABSL_FALLTHROUGH_INTENDED;
-      case State::kState1: {
-        GRPC_TRACE_LOG(promise_primitives, 2)
-                .AtLocation(whence.file(), whence.line())
-            << "seq[" << this << "]: begin poll step 2/4";
-        auto result = prior.prior.current_promise();
-        PromiseResult1* p = result.value_if_ready();
-        GRPC_TRACE_LOG(promise_primitives, 2)
-                .AtLocation(whence.file(), whence.line())
-            << "seq[" << this << "]: poll step 2/4 gets "
-            << (p != nullptr
-                    ? (PromiseResultTraits1::IsOk(*p)
-                           ? "ready"
-                           : absl::StrCat("early-error:",
-                                          PromiseResultTraits1::ErrorString(*p))
-                                 .c_str())
-                    : "pending");
-        if (p == nullptr) return Pending{};
-        if (!PromiseResultTraits1::IsOk(*p)) {
-          return PromiseResultTraits1::template ReturnValue<Result>(
-              std::move(*p));
-        }
-        Destruct(&prior.prior.current_promise);
-        auto next_promise = PromiseResultTraits1::CallFactory(
-            &prior.prior.next_factory, std::move(*p));
-        Destruct(&prior.prior.next_factory);
-        Construct(&prior.current_promise, std::move(next_promise));
-        state = State::kState2;
-      }
-        ABSL_FALLTHROUGH_INTENDED;
-      case State::kState2: {
-        GRPC_TRACE_LOG(promise_primitives, 2)
-                .AtLocation(whence.file(), whence.line())
-            << "seq[" << this << "]: begin poll step 3/4";
-        auto result = prior.current_promise();
-        PromiseResult2* p = result.value_if_ready();
-        GRPC_TRACE_LOG(promise_primitives, 2)
-                .AtLocation(whence.file(), whence.line())
-            << "seq[" << this << "]: poll step 3/4 gets "
-            << (p != nullptr
-                    ? (PromiseResultTraits2::IsOk(*p)
-                           ? "ready"
-                           : absl::StrCat("early-error:",
-                                          PromiseResultTraits2::ErrorString(*p))
-                                 .c_str())
-                    : "pending");
-        if (p == nullptr) return Pending{};
-        if (!PromiseResultTraits2::IsOk(*p)) {
-          return PromiseResultTraits2::template ReturnValue<Result>(
-              std::move(*p));
-        }
-        Destruct(&prior.current_promise);
-        auto next_promise = PromiseResultTraits2::CallFactory(
-            &prior.next_factory, std::move(*p));
-        Destruct(&prior.next_factory);
-        Construct(&current_promise, std::move(next_promise));
-        state = State::kState3;
-      }
-        ABSL_FALLTHROUGH_INTENDED;
-      default:
-      case State::kState3: {
-        GRPC_TRACE_LOG(promise_primitives, 2)
-                .AtLocation(whence.file(), whence.line())
-            << "seq[" << this << "]: begin poll step 4/4";
-      }
-        auto result = current_promise();
-        GRPC_TRACE_LOG(promise_primitives, 2)
-                .AtLocation(whence.file(), whence.line())
-            << "seq[" << this << "]: poll step 4/4 gets "
-            << (result.ready() ? "ready" : "pending");
-        auto* p = result.value_if_ready();
-        if (p == nullptr) return Pending{};
-        return Result(std::move(*p));
+      Destruct(&prior.prior.current_promise);
+      auto next_promise = PromiseResultTraits1::CallFactory(
+          &prior.prior.next_factory, std::move(*p));
+      Destruct(&prior.prior.next_factory);
+      Construct(&prior.current_promise, std::move(next_promise));
+      state = State::kState2;
     }
+      ABSL_FALLTHROUGH_INTENDED;
+    case State::kState2: {
+      GRPC_TRACE_LOG(promise_primitives, 2)
+              .AtLocation(whence.file(), whence.line())
+          << "seq[" << this << "]: begin poll step 3/4";
+      auto result = prior.current_promise();
+      PromiseResult2* p = result.value_if_ready();
+      GRPC_TRACE_LOG(promise_primitives, 2)
+              .AtLocation(whence.file(), whence.line())
+          << "seq[" << this << "]: poll step 3/4 gets "
+          << (p != nullptr
+                  ? (PromiseResultTraits2::IsOk(*p)
+                         ? "ready"
+                         : absl::StrCat("early-error:",
+                                        PromiseResultTraits2::ErrorString(*p))
+                               .c_str())
+                  : "pending");
+      if (p == nullptr) return Pending{};
+      if (!PromiseResultTraits2::IsOk(*p)) {
+        return PromiseResultTraits2::template ReturnValue<Result>(
+            std::move(*p));
+      }
+      Destruct(&prior.current_promise);
+      auto next_promise =
+          PromiseResultTraits2::CallFactory(&prior.next_factory, std::move(*p));
+      Destruct(&prior.next_factory);
+      Construct(&current_promise, std::move(next_promise));
+      state = State::kState3;
+    }
+      ABSL_FALLTHROUGH_INTENDED;
+    default:
+    case State::kState3: {
+      GRPC_TRACE_LOG(promise_primitives, 2)
+              .AtLocation(whence.file(), whence.line())
+          << "seq[" << this << "]: begin poll step 4/4";
+    }
+      auto result = current_promise();
+      GRPC_TRACE_LOG(promise_primitives, 2)
+              .AtLocation(whence.file(), whence.line())
+          << "seq[" << this << "]: poll step 4/4 gets "
+          << (result.ready() ? "ready" : "pending");
+      auto* p = result.value_if_ready();
+      if (p == nullptr) return Pending{};
+      return Result(std::move(*p));
   }
+}
 }
 }
 ;
