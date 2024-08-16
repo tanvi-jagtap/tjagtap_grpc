@@ -264,11 +264,7 @@ class PickFirst final : public LoadBalancingPolicy {
       // Checking attempting_index_ here is just an optimization -- if
       // we haven't actually tried all subchannels yet, then we don't
       // need to iterate.
-      if (attempting_index_ < size()) return false;
-      for (const auto& sd : subchannels_) {
-        if (!sd->seen_transient_failure()) return false;
-      }
-      return true;
+      return attempting_index_ >= size();
     }
 
    private:
@@ -1202,11 +1198,7 @@ class OldPickFirst final : public LoadBalancingPolicy {
       // Checking attempting_index_ here is just an optimization -- if
       // we haven't actually tried all subchannels yet, then we don't
       // need to iterate.
-      if (attempting_index_ < size()) return false;
-      for (const SubchannelData& sd : subchannels_) {
-        if (!sd.seen_transient_failure()) return false;
-      }
-      return true;
+      return attempting_index_ >= size();
     }
 
    private:
