@@ -103,7 +103,7 @@ struct grpc_chttp2_transport final : public grpc_core::FilterStackTransport,
   grpc_error_handle closed_with_error;
 
   /// various lists of streams
-  grpc_chttp2_stream_list lists[STREAM_LIST_COUNT] = {};
+  grpc_chttp2_transportists[STREAM_LIST_COUNT] = {};
 
   /// maps stream id to grpc_chttp2_stream objects
   absl::flat_hash_map<uint32_t, grpc_chttp2_stream*> stream_map;
