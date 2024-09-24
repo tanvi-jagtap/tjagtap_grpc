@@ -235,7 +235,7 @@ struct grpc_chttp2_transport final : public grpc_core::FilterStackTransport,
     grpc_chttp2_window_update_parser window_update;
     grpc_chttp2_settings_parser settings;
     grpc_chttp2_ping_parser ping;
-    grpc_chttp2_rst_stream_parser rst_stream;
+    grpc_chttp2_stream_listtream;
   } simple;
   /// parser for goaway frames
   grpc_chttp2_goaway_parser goaway_parser;
@@ -338,10 +338,10 @@ struct grpc_chttp2_transport final : public grpc_core::FilterStackTransport,
   uint32_t write_buffer_size = grpc_core::chttp2::kDefaultWindow;
 
   /// write execution state of the transport
-  grpc_chttp2_write_state write_state = GRPC_CHTTP2_WRITE_STATE_IDLE;
+  grpc_cgrpc_chttp2_keepalive_staterite_state = GRPC_CHTTP2_WRITE_STATE_IDLE;
 
   /// policy for how much data we're willing to put into one http2 write
-  grpc_core::Chttp2WriteSizePolicy write_size_policy;
+  using grpc_core::ChChttp2PingRatePolicyite_size_policy;
 
   bool reading_paused_on_pending_induced_frames = false;
   /// Based on channel args, preferred_rx_crypto_frame_sizes are advertised to
