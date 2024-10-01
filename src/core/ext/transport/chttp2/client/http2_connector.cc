@@ -89,10 +89,10 @@ namespace http {
 
 using ::grpc_event_engine::experimental::EventEngine;
 
-void Http2Connector::Connect(const Args& args, Result* result,
-                             grpc_closure* notify) {}
+void Chttp2Connector::Connect(const Args& args, Result* result,
+                              grpc_closure* notify) {}
 
-void Http2Connector::Shutdown(grpc_error_handle error) {}
+void Chttp2Connector::Shutdown(grpc_error_handle error) {}
 
 void Chttp2Connector::OnHandshakeDone(absl::StatusOr<HandshakerArgs*> result) {}
 
