@@ -93,18 +93,18 @@ using ::grpc_event_engine::experimental::EventEngine;
 // coming year. Do not use unless you know transports well enough.
 // TODO(tjagtap) : [PH2_TODO][P2] : Remove comment when code is ready
 
-void Http2Connector::Connect(const Args& args, Result* result,
-                             grpc_closure* notify) {}
+void Chttp2Connector::Connect(const Args& args, Result* result,
+                              grpc_closure* notify) {}
 
-void Http2Connector::Shutdown(grpc_error_handle error) {}
+void Chttp2Connector::Shutdown(grpc_error_handle error) {}
 
-void Http2Connector::OnHandshakeDone(absl::StatusOr<HandshakerArgs*> result) {}
+void Chttp2Connector::OnHandshakeDone(absl::StatusOr<HandshakerArgs*> result) {}
 
-void Http2Connector::OnReceiveSettings(void* arg, grpc_error_handle error) {}
+void Chttp2Connector::OnReceiveSettings(void* arg, grpc_error_handle error) {}
 
-void Http2Connector::OnTimeout() {}
+void Chttp2Connector::OnTimeout() {}
 
-void Http2Connector::MaybeNotify(grpc_error_handle error) {}
+void Chttp2Connector::MaybeNotify(grpc_error_handle error) {}
 
 }  // namespace http
 }  // namespace grpc_core
