@@ -22,7 +22,6 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
-#include "gtest/gtest.h"
 #include "src/core/lib/event_engine/default_event_engine.h"
 #include "test/core/transport/chaotic_good/mock_promise_endpoint.h"
 #include "test/core/transport/chaotic_good/transport_test.h"
