@@ -25,7 +25,7 @@
 
 namespace grpc_core {
 
-HttpAnnotation::HttpAnnotation(Type type, gpr_timespec time)
+HttpAnnotation::HttpAnnotation(TcpTracerInterface::Type type, gpr_timespec time)
     : CallTracerAnnotationInterface::Annotation(
           CallTracerAnnotationInterface::AnnotationType::kHttpTransport),
       type_(type),
