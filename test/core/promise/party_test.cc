@@ -526,8 +526,8 @@ TEST_F(PartyTest, ThreadStressTest) {
     Timestamp& end_time = end_times[i];
     std::string& order = execution_order[i];
     absl::StrAppend(&order, absl::StrFormat("Thread %d : ", i));
-    threads.emplace_back([&start_time, &end_time, &kNumSpawns, thread_num = i,
-                          &order, party]() mutable {
+    threads.emplace_back([&start_time, &end_time, thread_num = i, &order,
+                          party]() mutable {
       start_time = Timestamp::Now();
       for (int j = 0; j < kNumSpawns; j++) {
         const int sleep_ms = (thread_num % 2 == 1) ? 5 : 15;
