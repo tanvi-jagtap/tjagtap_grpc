@@ -93,7 +93,8 @@ TEST_F(PartyTest, TestLargeNumberOfSpawnedPromises) {
   // 3. The data type moves correctly from the promise to the on_done callback.
   // 4. A party is able to spawn a large number of promises, as long as they
   //    are not all Pending.
-  // TODO - Is on_done called on the same thread immediately after the promise?
+  // TODO(unknown): - Is on_done called on the same thread immediately after the
+  // promise?
   const int kNumPromises = 256;
   std::string execution_order;
   auto party = MakeParty();
