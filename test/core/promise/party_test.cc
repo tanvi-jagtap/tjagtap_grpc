@@ -611,7 +611,7 @@ auto MakeSenderPromise(MpscSender<Payload>& sender, Notification& sent) {
   };
 }
 
-auto MakeReceiverPromise(MpscReceiver<Payload>& receiver, Notification& sent) {
+auto MakeReceiverPromise(PipeReceiver<Payload>& receiver, Notification& sent) {
   return [&receiver, &sent]() {
     sent.WaitForNotification();
     auto receive_promise = receiver.Next();
@@ -637,7 +637,8 @@ TEST_F(PartyTest, MpscTest) {
   // Number of Threads   = 1
 
   // Basic MPSC & Party test.
-  MpscReceiver<Payload> receiver(1);
+  MpscReceiver<Payload>;
+  receiver(1);
   MpscSender<Payload> sender = receiver.MakeSender();
   auto party = MakeParty();
   Notification sent;
