@@ -94,65 +94,65 @@ TEST(SwitchTest, Pending) {
                     absl::StrAppend(&execution_order, "D");
                     return -1;
                   }));
-  auto test_switch = [](int d) {
-    return Switch(d, Case<42>([]() -> Poll<int> { return Pending{}; }),
-                  Case<1>([] { return 25; }), Case<2>([] { return 95; }),
-                  Case<3>([] { return 68; }), Default([] { return 52; }));
+    auto test_switch = [](int d) {
+      return Switch(d, Case<42>([]() -> Poll<int> { return Pending{}; }),
+                    Case<1>([] { return 25; }), Case<2>([] { return 95; }),
+                    Case<3>([] { return 68; }), Default([] { return 52; }));
+    };
+
+    EXPECT_EQ(test_switch(0)(), Poll<int>(Pending{}));
+    EXPECT_STREQ(execution_order.c_str(), "0");
+
+    EXPECT_EQ(test_switch(1)(), Poll<int>(100));
+    EXPECT_STREQ(execution_order.c_str(), "1");
+
+    EXPECT_EQ(test_switch(2)(), Poll<int>(200));
+    EXPECT_STREQ(execution_order.c_str(), "2");
+
+    EXPECT_EQ(test_switch(3)(), Poll<int>(Pending{}));
+    EXPECT_STREQ(execution_order.c_str(), "3");
+
+    EXPECT_EQ(test_switch(4)(), Poll<int>(-1));
+    EXPECT_STREQ(execution_order.c_str(), "D");
+
+    is_pending = false;
+    EXPECT_EQ(test_switch(3)(), Poll<int>(300));
+    EXPECT_STREQ(execution_order.c_str(), "3");
   };
 
-  EXPECT_EQ(test_switch(0)(), Poll<int>(Pending{}));
-  EXPECT_STREQ(execution_order.c_str(), "0");
+  TEST(SwitchTest, ThreeCasesFromEnum) {
+    std::string execution_order;
+    enum class X : uint8_t { A, B, C };
 
-  EXPECT_EQ(test_switch(1)(), Poll<int>(100));
-  EXPECT_STREQ(execution_order.c_str(), "1");
+    auto test_switch = [&execution_order](X value) {
+      execution_order.clear();
+      return Switch(value, Case<X, X::A>([&execution_order] {
+                      absl::StrAppend(&execution_order, "A");
+                      return 100;
+                    }),
+                    Case<X, X::B>([&execution_order] {
+                      absl::StrAppend(&execution_order, "B");
+                      return 200;
+                    }),
+                    Case<X, X::C>([&execution_order] {
+                      absl::StrAppend(&execution_order, "C");
+                      return 300;
+                    }),
+                    Default([&execution_order] {
+                      absl::StrAppend(&execution_order, "D");
+                      return 52;
+                    }));
+    };
 
-  EXPECT_EQ(test_switch(2)(), Poll<int>(200));
-  EXPECT_STREQ(execution_order.c_str(), "2");
+    EXPECT_EQ(test_switch(X::A)(), Poll<int>(100));
+    EXPECT_STREQ(execution_order.c_str(), "A");
 
-  EXPECT_EQ(test_switch(3)(), Poll<int>(Pending{}));
-  EXPECT_STREQ(execution_order.c_str(), "3");
+    EXPECT_EQ(test_switch(X::B)(), Poll<int>(200));
+    EXPECT_STREQ(execution_order.c_str(), "B");
 
-  EXPECT_EQ(test_switch(4)(), Poll<int>(-1));
-  EXPECT_STREQ(execution_order.c_str(), "D");
-
-  is_pending = false;
-  EXPECT_EQ(test_switch(3)(), Poll<int>(300));
-  EXPECT_STREQ(execution_order.c_str(), "3");
-}
-
-TEST(SwitchTest, ThreeCasesFromEnum) {
-  std::string execution_order;
-  enum class X : uint8_t { A, B, C };
-
-  auto test_switch = [&execution_order](X value) {
-    execution_order.clear();
-    return Switch(value, Case<X, X::A>([&execution_order] {
-                    absl::StrAppend(&execution_order, "A");
-                    return 100;
-                  }),
-                  Case<X, X::B>([&execution_order] {
-                    absl::StrAppend(&execution_order, "B");
-                    return 200;
-                  }),
-                  Case<X, X::C>([&execution_order] {
-                    absl::StrAppend(&execution_order, "C");
-                    return 300;
-                  }),
-                  Default([&execution_order] {
-                    absl::StrAppend(&execution_order, "D");
-                    return 52;
-                  }));
-  };
-
-  EXPECT_EQ(test_switch(X::A)(), Poll<int>(100));
-  EXPECT_STREQ(execution_order.c_str(), "A");
-
-  EXPECT_EQ(test_switch(X::B)(), Poll<int>(200));
-  EXPECT_STREQ(execution_order.c_str(), "B");
-
-  EXPECT_EQ(test_switch(X::C)(), Poll<int>(300));
-  EXPECT_STREQ(execution_order.c_str(), "C");
-}
+    EXPECT_EQ(test_switch(X::C)(), Poll<int>(300));
+    EXPECT_STREQ(execution_order.c_str(), "C");
+  }
 
 }  // namespace grpc_core
 
