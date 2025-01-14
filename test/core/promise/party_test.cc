@@ -650,7 +650,7 @@ TEST_F(PartyTest, MpscOneSenderOneReceiverTest) {
   auto party = MakeParty();
   Notification sent;
   Notification done;
-  std::string execution_order = "";
+  std::string execution_order;
   party->Spawn("sender", MakeSenderPromise(sender, sent, execution_order, 42),
                OnCompleteNoop());
   party->Spawn("receiver",
