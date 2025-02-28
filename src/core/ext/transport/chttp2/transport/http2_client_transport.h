@@ -128,7 +128,7 @@ class Http2ClientTransport final : public ClientTransport {
   // TODO(tjagtap) : [PH2][P0] : Decide data type and queue name
   // MpscReceiver<ClientFrame> outgoing_frames_;
 
-  grpc_core::Mutex transport_mutex_;
+  Mutex transport_mutex_;
   // TODO(tjagtap) : [PH2][P2] : Add to map in StartCall and clean this mapping
   // up in the on_done of the CallInitiator or CallHandler
   absl::flat_hash_map<uint32_t, RefCountedPtr<Stream>> stream_list_
