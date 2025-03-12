@@ -180,7 +180,7 @@ struct Http2EmptyFrame {
 // arbitrary frame between layers as appropriate.
 using Http2Frame =
     std::variant<Http2DataFrame, Http2HeaderFrame, Http2ContinuationFrame,
-                 Http2RstStreamFrame, Http2SettingsFrame, Http2PingFrame,
+                 Http2RstStreamFrame, Http2SettingsFrame, Http2DataFrame,
                  Http2GoawayFrame, Http2WindowUpdateFrame, Http2SecurityFrame,
                  Http2UnknownFrame, Http2EmptyFrame>;
 
