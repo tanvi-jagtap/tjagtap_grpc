@@ -258,19 +258,18 @@ void AppendGrpcHeaderToSliceBuffer(SliceBuffer& payload, const uint8_t flags,
 // RFC Validators
 // Move into a new file
 
-
 // Akshits idea : go/totw/155#dynamic-dispatch-via-visitation
 
 class HTTP2RfcValidator {
   // For all frames except header and connection
-  static HTTPErrorCode ValidateFrame(const HTTP2DataFrame& frame);
+  static HTTPErrorCode ValidateFrame(const Http2DataFrame& frame);
 
   // We cannot validate Header and Continuation frames in isolation.
   // A lot of their musts are tied together.
   // Example : only the last Continuation should have END_HEADER flag set.
   static HTTPErrorCode ValidateFrame(
-      const HTTP2HeaderFrame& frame,
-      const std::vector<const HTTP2ContinuationFrame*>& frames);
+      const Http2HeaderFrame& frame,
+      const std::vector<const Http2ContinuationFrame*>& frames);
 
   static HTTPErrorCode ValidFrameForState(const StreamState state,
                                           const int frame_type);
