@@ -220,7 +220,7 @@ struct Http2FrameHeader {
   }
 };
 
-using grpc_core::http2::Http2Error;
+using http2::Http2Error;
 using Http2StatusOr = std::variant<Http2Frame, Http2Error>;
 
 ///////////////////////////////////////////////////////////////////////////////
