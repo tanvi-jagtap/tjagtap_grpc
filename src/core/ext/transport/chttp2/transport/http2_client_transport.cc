@@ -50,8 +50,8 @@
 namespace grpc_core {
 namespace http2 {
 
-using grpc_core::http2::Http2Error;
 using grpc_event_engine::experimental::EventEngine;
+using http2::Http2Error;
 
 // Experimental : This is just the initial skeleton of class
 // and it is functions. The code will be written iteratively.
@@ -303,7 +303,7 @@ auto Http2ClientTransport::ReadAndProcessOneFrame() {
             << "Http2ClientTransport ReadAndProcessOneFrame ProcessOneFrame";
         return AssertResultType<Http2Error>(ProcessOneFrame(std::move(frame)));
       },
-      [this](Http2Error error) {
+      [](Http2Error error) {
         if (!error.ok()) {
           HTTP2_CLIENT_DLOG << "Http2ClientTransport ProcessOneFrame Error";
           // TODO(tjagtap) : [PH2][P1] : Either close the stream or close the
