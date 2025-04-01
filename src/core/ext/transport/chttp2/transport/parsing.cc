@@ -585,9 +585,10 @@ error_handler:
     // handle stream errors by closing the stream
     grpc_chttp2_mark_stream_closed(t, s, true, false,
                                    absl_status_to_grpc_error(status));
-    grpc_chttp2_add_rst_stream_to_next_write(t, t->incoming_stream_id,
-                                             Http2ErrorCode::kProtocolError,
-                                             &s->call_tracer_wrapper);
+    grpc_chttp2_add_rst_stream_to_next_write(
+        t, t->incoming_stream_id,
+        grpc_core::http2::Http2ErrorCode::kProtocolError,
+        &s->call_tracer_wrapper);
     return init_non_header_skip_frame_parser(t);
   } else {
     return absl_status_to_grpc_error(status);
@@ -656,7 +657,8 @@ static grpc_error_handle init_header_frame_parser(grpc_chttp2_transport* t,
       grpc_slice_buffer_add(
           &t->qbuf,
           grpc_chttp2_rst_stream_create(
-              t->incoming_stream_id, Http2ErrorCode::kRefusedStream, nullptr));
+              t->incoming_stream_id,
+              grpc_core::http2::Http2ErrorCode::kRefusedStream, nullptr));
       grpc_chttp2_initiate_write(t, GRPC_CHTTP2_INITIATE_WRITE_RST_STREAM);
       return init_header_skip_frame_parser(t, priority_type, is_eoh);
     } else if (grpc_core::IsRqFastRejectEnabled() &&
@@ -666,9 +668,10 @@ static grpc_error_handle init_header_frame_parser(grpc_chttp2_transport* t,
       grpc_core::global_stats().IncrementRqCallsRejected();
       ++t->num_pending_induced_frames;
       grpc_slice_buffer_add(
-          &t->qbuf, grpc_chttp2_rst_stream_create(
-                        t->incoming_stream_id, Http2ErrorCode::kEnhanceYourCalm,
-                        nullptr));
+          &t->qbuf,
+          grpc_chttp2_rst_stream_create(
+              t->incoming_stream_id,
+              grpc_core::http2::Http2ErrorCode::kEnhanceYourCalm, nullptr));
       grpc_chttp2_initiate_write(t, GRPC_CHTTP2_INITIATE_WRITE_RST_STREAM);
       return init_header_skip_frame_parser(t, priority_type, is_eoh);
     } else if (GPR_UNLIKELY(
@@ -681,7 +684,8 @@ static grpc_error_handle init_header_frame_parser(grpc_chttp2_transport* t,
       grpc_slice_buffer_add(
           &t->qbuf,
           grpc_chttp2_rst_stream_create(
-              t->incoming_stream_id, Http2ErrorCode::kRefusedStream, nullptr));
+              t->incoming_stream_id,
+              grpc_core::http2::Http2ErrorCode::kRefusedStream, nullptr));
       grpc_chttp2_initiate_write(t, GRPC_CHTTP2_INITIATE_WRITE_RST_STREAM);
       return init_header_skip_frame_parser(t, priority_type, is_eoh);
     } else if (GPR_UNLIKELY(t->stream_map.size() >=
@@ -697,7 +701,8 @@ static grpc_error_handle init_header_frame_parser(grpc_chttp2_transport* t,
       grpc_slice_buffer_add(
           &t->qbuf,
           grpc_chttp2_rst_stream_create(
-              t->incoming_stream_id, Http2ErrorCode::kRefusedStream, nullptr));
+              t->incoming_stream_id,
+              grpc_core::http2::Http2ErrorCode::kRefusedStream, nullptr));
       grpc_chttp2_initiate_write(t, GRPC_CHTTP2_INITIATE_WRITE_RST_STREAM);
       return init_header_skip_frame_parser(t, priority_type, is_eoh);
     } else if (t->sent_goaway_state == GRPC_CHTTP2_FINAL_GOAWAY_SENT ||
@@ -721,9 +726,10 @@ static grpc_error_handle init_header_frame_parser(grpc_chttp2_transport* t,
           << " before settings have been acknowledged";
       ++t->num_pending_induced_frames;
       grpc_slice_buffer_add(
-          &t->qbuf, grpc_chttp2_rst_stream_create(
-                        t->incoming_stream_id, Http2ErrorCode::kEnhanceYourCalm,
-                        nullptr));
+          &t->qbuf,
+          grpc_chttp2_rst_stream_create(
+              t->incoming_stream_id,
+              grpc_core::http2::Http2ErrorCode::kEnhanceYourCalm, nullptr));
       grpc_chttp2_initiate_write(t, GRPC_CHTTP2_INITIATE_WRITE_RST_STREAM);
       t->last_new_stream_id = t->incoming_stream_id;
       return init_header_skip_frame_parser(t, priority_type, is_eoh);
@@ -946,8 +952,9 @@ static void force_client_rst_stream(void* sp, grpc_error_handle /*error*/) {
   grpc_chttp2_stream* s = static_cast<grpc_chttp2_stream*>(sp);
   grpc_chttp2_transport* t = s->t.get();
   if (!s->write_closed) {
-    grpc_chttp2_add_rst_stream_to_next_write(t, s->id, Http2ErrorCode::kNoError,
-                                             &s->call_tracer_wrapper);
+    grpc_chttp2_add_rst_stream_to_next_write(
+        t, s->id, grpc_core::http2::Http2ErrorCode::kNoError,
+        &s->call_tracer_wrapper);
     grpc_chttp2_initiate_write(t, GRPC_CHTTP2_INITIATE_WRITE_FORCE_RST_STREAM);
     grpc_chttp2_mark_stream_closed(t, s, true, true, absl::OkStatus());
   }

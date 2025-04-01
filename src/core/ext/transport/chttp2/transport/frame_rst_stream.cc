@@ -38,7 +38,7 @@
 #include "src/core/lib/experiments/experiments.h"
 #include "src/core/util/status_helper.h"
 
-using http2::Http2ErrorCode;
+using grpc_core::http2::Http2ErrorCode;
 
 grpc_slice grpc_chttp2_rst_stream_create(
     uint32_t id, uint32_t code, grpc_core::CallTracerInterface* call_tracer) {

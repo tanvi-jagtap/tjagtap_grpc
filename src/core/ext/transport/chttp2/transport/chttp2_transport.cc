@@ -125,7 +125,7 @@
 #define GRPC_ARG_HTTP2_PING_ON_RST_STREAM_PERCENT \
   "grpc.http2.ping_on_rst_stream_percent"
 
-using http2::Http2ErrorCode;
+using grpc_core::http2::Http2ErrorCode;
 
 static grpc_core::Duration g_default_client_keepalive_time =
     grpc_core::Duration::Infinity();
