@@ -632,8 +632,9 @@ class StreamWriteContext {
     if (!t_->is_client && !s_->read_closed) {
       grpc_slice_buffer_add(
           t_->outbuf.c_slice_buffer(),
-          grpc_chttp2_rst_stream_create(s_->id, Http2ErrorCode::kNoError,
-                                        &s_->call_tracer_wrapper));
+          grpc_chttp2_rst_stream_create(
+              s_->id, grpc_core::http2::Http2ErrorCode::kNoError,
+              &s_->call_tracer_wrapper));
     }
     grpc_chttp2_mark_stream_closed(t_, s_, !t_->is_client, true,
                                    absl::OkStatus());
