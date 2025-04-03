@@ -16,8 +16,8 @@
 //
 //
 
-#ifndef GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
-#define GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
+#ifndef GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
+#define GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
 
 #include <cstdint>
 #include <utility>
@@ -67,7 +67,7 @@ class GrpcMessageAssembler {
     }
     if (state_ == ReadingState::kCompleteHeader &&
         message_buffer_.Length() >= header_.length) {
-      // TODO : Special case : if gRPC header has message length 0?
+      // TODO(unknown): Special case : if gRPC header has message length 0?
       // Pass it up
       // Max len of a gRPC message. 4 GB. Other stacks fail at 2GB.
       SliceBuffer temp;
@@ -82,8 +82,8 @@ class GrpcMessageAssembler {
   }
 
  public:
-  // TODO : Special case : what if we get only half a message and end_Stream?
-  // Fail the STREAM.
+  // TODO(unknown): Special case : what if we get only half a message and
+  // end_Stream? Fail the STREAM.
   enum class ReadingState : uint8_t {
     kNewMessage,
     kCompleteHeader,
@@ -120,4 +120,4 @@ GRPC_CHECK_CLASS_SIZE(GrpcMessageAssembler, 10);
 }  // namespace http2
 }  // namespace grpc_core
 
-#endif  // GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
+#endif  // GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
