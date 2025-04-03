@@ -16,8 +16,8 @@
 //
 //
 
-#ifndef GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
-#define GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
+#ifndef GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
+#define GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
 
 #include <cstdint>
 #include <utility>
@@ -78,8 +78,8 @@ class GrpcMessageAssembler {
     }
 
    public:
-    // TODO : Special case : what if we get only half a message and end_Stream?
-    // Fail the STREAM.
+    // TODO(unknown): Special case : what if we get only half a message and
+    // end_Stream? Fail the STREAM.
     bool is_end_of_stream_ = false;
     SliceBuffer message_buffer_;
   };
@@ -87,6 +87,6 @@ class GrpcMessageAssembler {
   GRPC_CHECK_CLASS_SIZE(GrpcMessageAssembler, 10);
 
 }  // namespace http2
-}  // namespace grpc_core
+}  // namespace http2
 
-#endif  // GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
+#endif  // GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
