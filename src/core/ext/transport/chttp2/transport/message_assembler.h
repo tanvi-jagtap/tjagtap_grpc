@@ -16,8 +16,8 @@
 //
 //
 
-#ifndef GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
-#define GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
+#ifndef GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
+#define GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
 
 #include <cstdint>
 #include <utility>
@@ -72,13 +72,12 @@ class GrpcMessageAssembler {
       SliceBuffer temp;
       message_buffer_.MoveFirstNBytesIntoSliceBuffer(header.length, temp);
       MessageHandle grpc_message = Arena::MakePooled<Message>();
-      grpc_message->payload()->Append(std::move(temp));
+      grpc_message->payload()->Append(temp);
       return grpc_message;
     }
     return ReturnNullOrError();
   }
 
- public:
   absl::StatusOr<MessageHandle> ReturnNullOrError() {
     if (is_end_stream_ && message_buffer_.Length() > 0) {
       return absl::InternalError("Incomplete gRPC frame received");
@@ -92,4 +91,4 @@ class GrpcMessageAssembler {
 }  // namespace http2
 }  // namespace grpc_core
 
-#endif  // GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
+#endif  // GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
