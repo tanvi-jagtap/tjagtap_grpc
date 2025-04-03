@@ -16,8 +16,8 @@
 //
 //
 
-#ifndef GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
-#define GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
+#ifndef GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
+#define GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H
 
 #include <cstdint>
 #include <utility>
@@ -45,7 +45,7 @@ class GrpcMessageAssembler {
   // Input : The input must contain the payload from the Http2DataFrame.
   // This function will move the payload into an internal buffer.
   void AppendNewDataFrame(SliceBuffer& payload, bool is_end_of_stream) {
-    is_end_of_stream_ = is_end_of_stream;
+    is_end_of_stream = is_end_of_stream;
     DCHECK_GE(payload.Length(), 0);
     payload.MoveFirstNBytesIntoSliceBuffer(payload.Length(), message_buffer_);
     DCHECK_EQ(payload.Length(), 0);
@@ -68,7 +68,7 @@ class GrpcMessageAssembler {
         SliceBuffer temp;
         message_buffer_.MoveFirstNBytesIntoSliceBuffer(header_.length, temp);
         MessageHandle grpc_message = Arena::MakePooled<Message>();
-        grpc_message->payload()->Append(std::move(temp));
+        grpc_message->payload()->Append(temp);
         return grpc_message;
       }
       if (is_end_of_stream_ && message_buffer_.Length() > 0) {
@@ -84,7 +84,7 @@ class GrpcMessageAssembler {
 
   GRPC_CHECK_CLASS_SIZE(GrpcMessageAssembler, 10);
 
+};  // namespace http2
 }  // namespace http2
-}  // namespace grpc_core
 
-#endif  // GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_HTTP2_MESSAGE_ASSEMBLER_H
+#endif  // GRPC_SRC_CORE_EXT_TRANSPORT_CHTTP2_TRANSPORT_MESSAGE_ASSEMBLER_H

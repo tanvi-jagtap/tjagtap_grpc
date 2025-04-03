@@ -146,12 +146,12 @@ class Http2ClientTransport final : public ClientTransport {
   // Managing the streams
   struct Stream : public RefCounted<Stream> {
     explicit Stream(CallHandler call)
-        : call(std::move(call)), stream_state(HttpStreamState::kIdle) {}
+        : call(std::move(call)), stream_state(http2::HttpStreamState::kIdle) {}
 
     CallHandler call;
-    HttpStreamState stream_state;
-    TransportSendQeueue send_queue;
-    GrpcMessageAssembler assembler;
+    http2::HttpStreamState stream_state;
+    http2::TransportSendQeueue send_queue;
+    http2::GrpcMessageAssembler assembler;
     // TODO(tjagtap) : [PH2][P2] : Add more members as necessary
   };
 
