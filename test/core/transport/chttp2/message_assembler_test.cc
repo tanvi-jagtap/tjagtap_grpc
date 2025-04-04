@@ -37,7 +37,7 @@ namespace testing {
 
 constexpr bool not_end_stream = false;
 constexpr bool end_stream = true;
-constexpr bool flags = 0;
+constexpr bool flags = false;
 
 constexpr absl::string_view kHelloWorld = "Hello World!";
 
