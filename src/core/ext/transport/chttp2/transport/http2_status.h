@@ -96,7 +96,7 @@ class Http2Status {
     kGrpcError = 0x3,
   };
 
-  Http2Status(const absl::StatusCode code)
+  explicit Http2Status(const absl::StatusCode code)
       : http2_code_(Http2ErrorCode::kNoError),
         error_type_(Http2ErrorType::kOk),
         absl_code_(code) {}
