@@ -95,7 +95,7 @@ class Http2Status {
     kGrpcError = 0x3,
   };
 
-  Http2Status(const absl::StatusCode code)
+  explicit Http2Status(const absl::StatusCode code)
       : http2_code_(Http2ErrorCode::kNoError),
         error_type_(Http2ErrorType::kOk),
         absl_code_(code) {}
@@ -176,8 +176,8 @@ class Http2StatusOr {
 
   Http2Status status() { return std::get<Http2Status>(status_or_); }
 
-  Http2StatusOr(Http2Status status) : status_or_(status) {}
-  Http2StatusOr(T value) : status_or_(value) {}
+  explicit Http2StatusOr(Http2Status status) : status_or_(status) {}
+  explicit Http2StatusOr(T value) : status_or_(value) {}
 
   // TODO(tjagtap):[PH2][P1]:Implement for move
  private:
