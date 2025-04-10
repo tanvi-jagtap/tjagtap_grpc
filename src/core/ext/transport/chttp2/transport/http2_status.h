@@ -166,7 +166,7 @@ class Http2Status {
            (http2_code_ > Http2ErrorCode::kNoError &&
             error_type_ > Http2ErrorType::kOk &&
             absl_code_ != absl::StatusCode::kOk));
-    DCHECK(is_ok() ? message_.size() == 0 : message_.size() > 0);
+    DCHECK(is_ok() ? message_.empty() : !message_.empty());
   }
 
   absl::StatusCode ErrorCodeToStatusCode() const {
@@ -238,7 +238,7 @@ class ValueOrHttp2Status {
   ValueOrHttp2Status(T value) : value_(std::move(value)) {}
   // NOLINTNEXTLINE(google-explicit-constructor)
   // See if string is deep copy or shallow copy
-  ValueOrHttp2Status(Http2Status status) : status_(status) {
+  explicit ValueOrHttp2Status(Http2Status status) : status_(status) {
     CHECK(status.GetType() != Http2Status::Http2ErrorType::kOk);
   }
 
