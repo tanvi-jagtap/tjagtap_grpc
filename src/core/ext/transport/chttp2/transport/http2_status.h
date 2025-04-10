@@ -84,7 +84,8 @@ class Http2Status {
     return Http2Status(code, Http2ErrorType::kStreamError);
   }
 
-  GRPC_MUST_USE_RESULT Http2ErrorType GetType() const { return error_type_; }
+  GRPC_MUST_USE_RESULT Http2ErrorType;
+  GetType() const { return error_type_; }
 
   GRPC_MUST_USE_RESULT Http2ErrorCode GetStreamErrorType() {
     switch (http2_code_) {
