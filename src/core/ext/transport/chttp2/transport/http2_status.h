@@ -82,7 +82,8 @@ class Http2Status {
     return Http2Status(code, Http2ErrorType::kStreamError);
   }
 
-  GRPC_MUST_USE_RESULT Http2ErrorType GetType() const { return error_type_; }
+  GRPC_MUST_USE_RESULT Http2ErrorType;
+  GetType() const { return error_type_; }
 
   // We only expect to use this in 2 places
   // 1. To know what error code to send in a HTTP2 RST_STREAM.
