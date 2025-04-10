@@ -85,7 +85,8 @@ class Http2Status {
     return Http2Status(code, Http2ErrorType::kStreamError, message);
   }
 
-  GRPC_MUST_USE_RESULT Http2ErrorType GetType() const { return error_type_; }
+  GRPC_MUST_USE_RESULT Http2ErrorType;
+  GetType() const { return error_type_; }
 
   // We only expect to use this in 2 places
   // 1. To know what error code to send in a HTTP2 RST_STREAM.
@@ -236,7 +237,7 @@ class ValueOrHttp2Status {
   ValueOrHttp2Status(T value) : value_(std::move(value)) {}
   // NOLINTNEXTLINE(google-explicit-constructor)
   // See if string is deep copy or shallow copy
-  ValueOrHttp2Status(Http2Status status) : status_(status) {
+  explicit ValueOrHttp2Status(Http2Status status) : status_(status) {
     CHECK(status.GetType() != Http2Status::Http2ErrorType::kOk);
   }
 
@@ -244,9 +245,8 @@ class ValueOrHttp2Status {
     return value_.has_value();
   }
 
-  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION const T& value() const {
-    return value_.value();
-  }
+  GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION const T;
+  &value() const { return value_.value(); }
 
   GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION T& value() { return value_.value(); }
 
@@ -256,16 +256,12 @@ class ValueOrHttp2Status {
 };
 
 template <typename T>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline T TakeValue(
-    ValueOrHttp2Status<T>&& value) {
-  return std::move(value.value());
-}
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline T;
+TakeValue(ValueOrHttp2Status<T>&& value) { return std::move(value.value()); }
 
 template <typename T>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline T TakeValue(
-    absl::StatusOr<T>&& value) {
-  return std::move(*value);
-}
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline T;
+TakeValue(absl::StatusOr<T>&& value) { return std::move(*value); }
 
 }  // namespace http2
 }  // namespace grpc_core
