@@ -306,25 +306,28 @@ inline constexpr absl::string_view kGoAwayLength8 =
     "GOAWAY frame should have a Last-Stream-ID and Error Code making the "
     "minimum length 8 octets";
 
-Http2Status StripPadding(SliceBuffer& payload) {
+http2::Http2Status StripPadding(SliceBuffer& payload) {
   if (payload.Length() < 1) {
-    return Http2Status::ProtocolConnectionError(kFrameParserIncorrectPadding);
+    return http2::Http2Status::ProtocolConnectionError(
+        kFrameParserIncorrectPadding);
   }
   uint8_t padding_bytes;
   payload.MoveFirstNBytesIntoBuffer(1, &padding_bytes);
   if (payload.Length() < padding_bytes) {
-    return Http2Status::ProtocolConnectionError(kFrameParserIncorrectPadding);
+    return http2::Http2Status::ProtocolConnectionError(
+        kFrameParserIncorrectPadding);
   }
   payload.RemoveLastNBytes(padding_bytes);
-  return Http2Status::Ok();
+  return http2::Http2Status::Ok();
 }
 
-Http2StatusOr ParseDataFrame(const Http2FrameHeader& hdr,
-                             SliceBuffer& payload) {
+http2::Http2Status ParseDataFrame(const Http2FrameHeader& hdr,
+                                  SliceBuffer& payload) {
   if (hdr.stream_id == 0) {
-    return Http2Status::ProtocolConnectionError(kDataStreamIdMustBeNonZero);
+    return http2::Http2Status::ProtocolConnectionError(
+        kDataStreamIdMustBeNonZero);
   } else if ((hdr.stream_id % 2) == 0) {
-    return Http2Status::ProtocolConnectionError(kStreamIdMustBeOdd);
+    return http2::Http2Status::ProtocolConnectionError(kStreamIdMustBeOdd);
   }
 
   if (hdr.flags & kFlagPadded) {
@@ -336,10 +339,11 @@ Http2StatusOr ParseDataFrame(const Http2FrameHeader& hdr,
                         std::move(payload)};
 }
 
-Http2StatusOr ParseHeaderFrame(const Http2FrameHeader& hdr,
-                               SliceBuffer& payload) {
+http2::Http2Status ParseHeaderFrame(const Http2FrameHeader& hdr,
+                                    SliceBuffer& payload) {
   if (hdr.stream_id == 0) {
-    return Http2Status::ProtocolConnectionError(kHeaderStreamIdMustBeNonZero);
+    return http2::Http2Status::ProtocolConnectionError(
+        kHeaderStreamIdMustBeNonZero);
   } else if ((hdr.stream_id % 2) == 0) {
     return Http2Status::ProtocolConnectionError(kStreamIdMustBeOdd);
   }
