@@ -237,7 +237,7 @@ class Http2Status {
 template <typename T>
 class ValueOrHttp2Status {
  public:
-  // TODO [PH2][P0] : some http2 frame types used to give some compile
+  // TODO(unknown): [PH2][P0] : some http2 frame types used to give some compile
   // issue with std::move. Check with tests.
 
   // NOLINTNEXTLINE(google-explicit-constructor)
@@ -260,7 +260,8 @@ class ValueOrHttp2Status {
   // Prefer TakeValue when you want std::move to be used
   GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION T& value() { return value_.value(); }
 
-  GRPC_MUST_USE_RESULT Http2ErrorType GetErrorType() const {
+  GRPC_MUST_UHttp2Status::Http2ErrorType2Status::Http2ErrorType GetErrorType()
+      const {
     CHECK(status_.has_value());
     return status_.value().GetType();
   }
@@ -285,8 +286,9 @@ class ValueOrHttp2Status {
     return status_.value().absl_status();
   }
 
- private:
-  friend function T TakeValue(ValueOrHttp2Status<T>&& value);
+  priva;
+  te : friend function T;
+  TakeValue(ValueOrHttp2Status<T>&& value);
   std::optional<T> value_;
   std::optional<T> status_;
 };
