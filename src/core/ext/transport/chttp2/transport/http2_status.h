@@ -233,7 +233,7 @@ class Http2Status {
   std::string message_;
 };
 
-// TODO [PH2][P2] : We can add more methods and helpers as needed.
+// TODO(unknown): [PH2][P2] : We can add more methods and helpers as needed.
 // This class is similar to ValueOrFailure but a more minamilasit version.
 // Reference :
 // https://github.com/grpc/grpc/blob/master/src/core/lib/promise/status_flag.h
@@ -242,7 +242,7 @@ class Http2Status {
 template <typename T>
 class ValueOrHttp2Status {
  public:
-  // TODO [PH2][P0] : some http2 frame types used to give some compile
+  // TODO(unknown): [PH2][P0] : some http2 frame types used to give some compile
   // issue with std::move. Check with tests.
 
   // NOLINTNEXTLINE(google-explicit-constructor)
