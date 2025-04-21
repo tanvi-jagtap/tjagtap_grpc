@@ -210,7 +210,7 @@ TEST(Http2StatusTest, AbslStreamErrorTest) {
 
 TEST(ValueOrHttp2Status, ValuePrimitiveDataType) {
   const int kValue = 100;
-  auto test_lambda = [kValue]() -> ValueOrHttp2Status<int> { return kValue; };
+  auto test_lambda = []() -> ValueOrHttp2Status<int> { return kValue; };
   ValueOrHttp2Status<int> result = test_lambda();
 
   // 1. IsOk() is false
