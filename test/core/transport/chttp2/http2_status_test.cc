@@ -383,7 +383,7 @@ TEST(ValueOrHttp2StatusTest, Http2StreamError) {
 
 TEST(ValueOrHttp2StatusTest, AbslConnectionError) {
   constexpr absl::StatusCode code = absl::StatusCode::kCancelled;
-  auto test_lambda = [code]() -> ValueOrHttp2Status<std::string> {
+  auto test_lambda = []() -> ValueOrHttp2Status<std::string> {
     return ValueOrHttp2Status<std::string>(
         Http2Status::AbslConnectionError(code, "Message1"));
   };
@@ -416,7 +416,7 @@ TEST(ValueOrHttp2StatusTest, AbslConnectionError) {
 
 TEST(ValueOrHttp2StatusTest, AbslStreamError) {
   constexpr absl::StatusCode code = absl::StatusCode::kCancelled;
-  auto test_lambda = [code]() -> ValueOrHttp2Status<std::string> {
+  auto test_lambda = []() -> ValueOrHttp2Status<std::string> {
     return ValueOrHttp2Status<std::string>(
         Http2Status::AbslStreamError(code, "Message1"));
   };
