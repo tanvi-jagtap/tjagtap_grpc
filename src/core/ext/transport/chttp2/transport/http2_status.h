@@ -202,7 +202,7 @@ class Http2Status {
       : http2_code_(move_status.http2_code_),
         error_type_(move_status.error_type_),
         absl_code_(move_status.absl_code_),
-        message_(std::move(move_status.message_)) {}
+        message_(move_status.message_) {}
 
  private:
   explicit Http2Status()
