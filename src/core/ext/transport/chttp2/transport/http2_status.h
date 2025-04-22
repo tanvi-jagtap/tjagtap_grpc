@@ -196,7 +196,7 @@ class Http2Status {
                         ". Http2 Code: ", http2_code_);
   }
 
-  Http2Status(Http2Status&& move_status)
+  Http2Status(Http2Status&& move_status) noexcept
       : http2_code_(move_status.http2_code_),
         error_type_(move_status.error_type_),
         absl_code_(move_status.absl_code_),
