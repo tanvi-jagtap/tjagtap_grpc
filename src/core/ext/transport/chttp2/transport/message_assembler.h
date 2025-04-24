@@ -55,7 +55,7 @@ class GrpcMessageAssembler {
     if constexpr (sizeof(size_t) <= 4) {
       if (message_buffer_.Length() < UINT32_MAX - payload.Length()) {
         // STREAM_ERROR
-        return absl::Status::InternalError(
+        return absl::InternalError(
             "Stream Error: SliceBuffer overflow for 32 bit platforms.");
       }
     }
@@ -73,7 +73,7 @@ class GrpcMessageAssembler {
     GrpcMessageHeader header = ExtractGrpcHeader(message_buffer_);
     if constexpr (sizeof(size_t) <= 4) {
       if (header.length > kOneGb) {
-        return absl::Status::InternalError(
+        return absl::InternalError(
             "Stream Error: SliceBuffer overflow for 32 bit platforms.");
       }
     }
