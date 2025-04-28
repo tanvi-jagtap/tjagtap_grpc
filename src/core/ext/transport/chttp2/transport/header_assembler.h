@@ -148,10 +148,9 @@ class HeaderAssembler {
     return Http2Status::Ok();
   }
 
-  // TODO return correct type
-  Http2StatusOr<Metadata> ReadMetadata(HPackParser& parser,
-                                       bool is_initial_metadata,
-                                       bool is_client) {
+  // TODO(unknown): return correct type
+  Httplatent_see::Metadatar<latent_see::Metadata> ReadMetadata(
+      HPackParser& parser, bool is_initial_metadata, bool is_client) {
     ASSEMBLER_LOG << "ReadMetadata " << buffer_.Length() << " Bytes.";
 
     // Validate
