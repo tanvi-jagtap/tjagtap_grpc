@@ -151,10 +151,9 @@ class HeaderAssembler {
     return Http2Status::Ok();
   }
 
-  // TODO return correct type
-  ValueOrHttp2Status<Arena::PoolPtr<Metadata>> ReadMetadata(HPackParser& parser,
-                                            bool is_initial_metadata,
-                                            bool is_client) {
+  // TODO(unknown): return correct type
+  ValueOrHttp2Status<Arena::PoolPtr<Metadata>> ReadMetadata(
+      HPackParser& parser, bool is_initial_metadata, bool is_client) {
     ASSEMBLER_LOG << "ReadMetadata " << buffer_.Length() << " Bytes.";
 
     // Validate
