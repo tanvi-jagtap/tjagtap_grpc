@@ -52,8 +52,8 @@
 namespace grpc_core {
 namespace http2 {
 
-using grpc_core::http2::Http2Status;
 using grpc_event_engine::experimental::EventEngine;
+using http2::Http2Status;
 
 // Experimental : This is just the initial skeleton of class
 // and it is functions. The code will be written iteratively.
@@ -287,7 +287,7 @@ auto Http2ClientTransport::ReadAndProcessOneFrame() {
         HTTP2_CLIENT_DLOG
             << "Http2ClientTransport ReadAndProcessOneFrame ParseFramePayload "
             << payload.JoinIntoString();
-        Http2StatusOr value =
+        Http2Status value =
             ParseFramePayload(current_frame_header_, std::move(payload));
         if (std::holds_alternative<Http2Status>(value)) {
           Http2Status error = std::get<Http2Status>(value);
@@ -305,7 +305,7 @@ auto Http2ClientTransport::ReadAndProcessOneFrame() {
             << "Http2ClientTransport ReadAndProcessOneFrame ProcessOneFrame";
         return AssertResultType<Http2Status>(ProcessOneFrame(std::move(frame)));
       },
-      [this](Http2Status error) {
+      [](Http2Status error) {
         if (!error.ok()) {
           HTTP2_CLIENT_DLOG << "Http2ClientTransport ProcessOneFrame Error";
           // TODO(tjagtap) : [PH2][P1] : Either close the stream or close the
