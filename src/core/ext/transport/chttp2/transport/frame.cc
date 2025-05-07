@@ -312,33 +312,34 @@ inline constexpr absl::string_view kGoAwayLength8 =
     "GOAWAY frame should have a Last-Stream-ID and Error Code making the "
     "minimum length 8 octets";
 
-Http2Status StripPadding(SliceBuffer& payload) {
+http2::Http2Status StripPadding(SliceBuffer& payload) {
   if (payload.Length() < 1) {
-    return Http2Status::Http2ConnectionError(Http2ErrorCode::kProtocolError,
-                                             kFrameParserIncorrectPadding);
+    return http2::Http2Status::Http2ConnectionError(
+        http2::Http2ErrorCode::kProtocolError, kFrameParserIncorrectPadding);
   }
   uint8_t padding_bytes;
   payload.MoveFirstNBytesIntoBuffer(1, &padding_bytes);
   if (payload.Length() <= padding_bytes) {
-    return Http2Status::Http2ConnectionError(
-        Http2ErrorCode::kProtocolError, kPaddingLengthLargerThanFrameLength);
+    return http2::Http2Status::Http2ConnectionError(
+        http2::Http2ErrorCode::kProtocolError,
+        kPaddingLengthLargerThanFrameLength);
   }
   // We currently dont check for padding being zero.
   // TODO(tjagtap) : [PH2][P4]
   // RFC9113 : A receiver is not obligated to verify padding but MAY treat
   // non-zero padding as a connection error of type PROTOCOL_ERROR.
   payload.RemoveLastNBytes(padding_bytes);
-  return Http2Status::Ok();
+  return http2::Http2Status::Ok();
 }
 
-Http2StatusOr ParseDataFrame(const Http2FrameHeader& hdr,
-                             SliceBuffer& payload) {
+http2::Http2Status ParseDataFrame(const Http2FrameHeader& hdr,
+                                  SliceBuffer& payload) {
   if (hdr.stream_id == 0) {
-    return Http2Status::Http2ConnectionError(Http2ErrorCode::kProtocolError,
-                                             kDataStreamIdMustBeNonZero);
+    return http2::Http2Status::Http2ConnectionError(
+        http2::Http2ErrorCode::kProtocolError, kDataStreamIdMustBeNonZero);
   } else if ((hdr.stream_id % 2) == 0) {
-    return Http2Status::Http2ConnectionError(Http2ErrorCode::kProtocolError,
-                                             kStreamIdMustBeOdd);
+    return http2::Http2Status::Http2ConnectionError(
+        http2::Http2ErrorCode::kProtocolError, kStreamIdMustBeOdd);
   }
 
   if (hdr.flags & kFlagPadded) {
@@ -350,8 +351,8 @@ Http2StatusOr ParseDataFrame(const Http2FrameHeader& hdr,
                         std::move(payload)};
 }
 
-Http2StatusOr ParseHeaderFrame(const Http2FrameHeader& hdr,
-                               SliceBuffer& payload) {
+http2::Http2Status ParseHeaderFrame(const Http2FrameHeader& hdr,
+                                    SliceBuffer& payload) {
   if (hdr.stream_id == 0) {
     return Http2Status::Http2ConnectionError(Http2ErrorCode::kProtocolError,
                                              kHeaderStreamIdMustBeNonZero);
