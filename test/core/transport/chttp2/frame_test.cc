@@ -25,7 +25,6 @@
 #include "src/core/lib/slice/slice_buffer.h"
 
 using grpc_core::http2::Http2ErrorCode;
-namespace RFC9113 = grpc_core::RFC9113;
 
 namespace grpc_core {
 namespace {
