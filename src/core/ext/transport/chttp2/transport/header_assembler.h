@@ -206,7 +206,7 @@ class HeaderAssembler {
         std::move(metadata));
   }
 
-  HeaderAssembler(const uint32_t stream_id)
+  explicit HeaderAssembler(const uint32_t stream_id)
       : header_in_progress_(false), is_ready_(false), stream_id_(stream_id) {}
 
   size_t GetBufferedHeadersLength() const { return buffer_.Length(); }
