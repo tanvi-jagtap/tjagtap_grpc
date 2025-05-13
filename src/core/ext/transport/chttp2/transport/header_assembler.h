@@ -132,7 +132,7 @@ class HeaderAssembler {
           std::string(kAssemblerContiguousSequenceError));
     }
 
-    if (is_ready_ == true) {
+    if (is_ready_) {
       // Received comtinuation frame after END_HEADERS was received. This is
       // wrong.
       Cleanup();
