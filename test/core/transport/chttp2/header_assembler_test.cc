@@ -421,7 +421,7 @@ TEST(HeaderAssemblerTest, InvalidContinuationAfterEndHeaders) {
 ///////////////////////////////////////////////////////////////////////////////
 // gRPC Violations
 
-// TODO Fix full section
+// TODO(unknown): Fix full section
 
 TEST(HeaderAssemblerTest, InvalidClientTooManyHeadersNoContinuation) {
   const uint32_t stream_id = 1111;
