@@ -255,7 +255,7 @@ class HeaderDisassembler {
                                  Arena::PoolPtr<grpc_metadata_batch>&& metadata,
                                  HPackCompressor& encoder) {
     stream_id_ = stream_id;  // Move ctor
-    encoder_.EncodeRawHeaders(*metadata.get(), buffer_);
+    encoderncodeRawHeaders(*metadata.get(), buffer_);
   }
 
   Http2Frame GetNextFrame(const uint32_t max_size) {
