@@ -431,7 +431,7 @@ TEST(HeaderAssemblerTest, InvalidClientTooManyHeaders) {
   Http2Status status1 = assembler.AppendHeaderFrame(std::move(header1));
   EXPECT_FALSE(status1.IsOk());
   EXPECT_EQ(status1.GetType(), Http2Status::Http2ErrorType::kConnectionError);
-  EXPECT_EQ(status2.GetConnectionErrorCode(), Http2ErrorCode::kInternalError);
+  EXPECT_EQ(status1.GetConnectionErrorCode(), Http2ErrorCode::kInternalError);
 }
 
 TEST(HeaderAssemblerTest, InvalidClientTooManyHeadersContinuation) {
@@ -446,7 +446,7 @@ TEST(HeaderAssemblerTest, InvalidClientTooManyHeadersContinuation) {
   Http2Status status1 = assembler.AppendHeaderFrame(std::move(header1));
   EXPECT_FALSE(status1.IsOk());
   EXPECT_EQ(status1.GetType(), Http2Status::Http2ErrorType::kConnectionError);
-  EXPECT_EQ(status2.GetConnectionErrorCode(), Http2ErrorCode::kInternalError);
+  EXPECT_EQ(status1.GetConnectionErrorCode(), Http2ErrorCode::kInternalError);
 }
 
 TEST(HeaderAssemblerTest, InvalidServerTooManyHeaders) {
@@ -458,7 +458,7 @@ TEST(HeaderAssemblerTest, InvalidServerTooManyHeaders) {
   Http2Status status1 = assembler.AppendHeaderFrame(std::move(header1));
   EXPECT_FALSE(status1.IsOk());
   EXPECT_EQ(status1.GetType(), Http2Status::Http2ErrorType::kConnectionError);
-  EXPECT_EQ(status2.GetConnectionErrorCode(), Http2ErrorCode::kInternalError);
+  EXPECT_EQ(status1.GetConnectionErrorCode(), Http2ErrorCode::kInternalError);
 }
 
 TEST(HeaderAssemblerTest, InvalidServerTooManyHeadersContinuation) {
@@ -471,7 +471,7 @@ TEST(HeaderAssemblerTest, InvalidServerTooManyHeadersContinuation) {
   Http2Status status1 = assembler.AppendHeaderFrame(std::move(header1));
   EXPECT_FALSE(status1.IsOk());
   EXPECT_EQ(status1.GetType(), Http2Status::Http2ErrorType::kConnectionError);
-  EXPECT_EQ(status2.GetConnectionErrorCode(), Http2ErrorCode::kInternalError);
+  EXPECT_EQ(status1.GetConnectionErrorCode(), Http2ErrorCode::kInternalError);
 }
 
 // TODO(tjagtap) : [PH2][P3] : Validate later. Edge case
