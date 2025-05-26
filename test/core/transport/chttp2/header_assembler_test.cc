@@ -485,7 +485,7 @@ void OneMetadataInOneFrame(const uint32_t stream_id,
     EXPECT_EQ(is_end_headers, true);
 
     ValidateHeaderFrame(std::move(frame), is_trailing_metadata,
-                        /*end_headers=*/true, kEncodedMetadataLen);
+                        /*is_end_headers=*/true, kEncodedMetadataLen);
     ExpectBufferLengths(disassembler, 0u);
 
     EXPECT_EQ(count, 1);
@@ -510,7 +510,7 @@ void SecondMetadataInOneFrame(const uint32_t stream_id,
     EXPECT_EQ(is_end_headers, true);
 
     ValidateHeaderFrame(std::move(frame), is_trailing_metadata,
-                        /*end_headers=*/true, 8);
+                        /*is_end_headers=*/true, 8);
     ExpectBufferLengths(disassembler, 0u);
 
     EXPECT_EQ(count, 1);
@@ -539,7 +539,7 @@ void OneMetadataInThreeFrames(const uint32_t stream_id,
     EXPECT_EQ(is_end_headers, false);
 
     ValidateHeaderFrame(std::move(frame), is_trailing_metadata,
-                        /*end_headers=*/false, frame_length);
+                        /*is_end_headers=*/false, frame_length);
 
     remaining_length -= frame_length;
     ExpectBufferLengths(disassembler, remaining_length);
