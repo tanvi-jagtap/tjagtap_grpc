@@ -436,7 +436,7 @@ Http2ClientTransport::Http2ClientTransport(
       stream_id_mutex_(/*Initial Stream Id*/ 1),
       bytes_sent_in_last_write_(false),
       incoming_header_in_progress_(false),
-      incoming_header_stream_id_(0),
+      incoming_header_stream_id_(false),
       keepalive_time_(std::max(
           Duration::Seconds(10),
           channel_args.GetDurationFromIntMillis(GRPC_ARG_KEEPALIVE_TIME_MS)
