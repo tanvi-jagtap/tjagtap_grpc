@@ -50,7 +50,7 @@ void InitLocalSettings(Http2Settings& settings, const bool is_client) {
   settings.SetAllowTrueBinaryMetadata(true);
 }
 
-void ReadSettingsFromChannelArgs(const grpc_core::ChannelArgs& channel_args,
+void ReadSettingsFromChannelArgs(const ChannelArgs& channel_args,
                                  Http2Settings& settings,
                                  const bool is_client) {
   int value =
@@ -77,8 +77,7 @@ void ReadSettingsFromChannelArgs(const grpc_core::ChannelArgs& channel_args,
     // Refer to read_channel_args() in chttp2_transport.cc for more details.
   }
 
-  settings.SetMaxHeaderListSize(
-      grpc_core::GetHardLimitFromChannelArgs(channel_args));
+  settings.SetMaxHeaderListSize(GetHardLimitFromChannelArgs(channel_args));
 
   value = channel_args.GetInt(GRPC_ARG_HTTP2_MAX_FRAME_SIZE).value_or(-1);
   if (value >= 0) {
