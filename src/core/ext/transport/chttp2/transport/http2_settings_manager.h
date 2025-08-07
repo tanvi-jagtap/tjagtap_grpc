@@ -70,8 +70,10 @@ class Http2SettingsManager {
   // This function is not idempotent.
   GRPC_MUST_USE_RESULT bool AckLastSend
 
-      GRPC_MUST_USE_RESULT bool
-      IsAckExpected() const {
+      GRPC_MUST_USE_RESULT;
+  ;
+  ;
+  bool IsAckExpected() const {
     return (update_state_ == UpdateState::kSending);
   }
 
@@ -102,7 +104,8 @@ class Http2SettingsManager {
 // Timeout for getting an ack back on settings changes
 #define GRPC_ARG_SETTINGS_TIMEOUT "grpc.http2.settings_timeout"
 
-#define GRPC_SETTINGS_TIMEOUT_DLOG LOG(ERROR)  // TODO change to DVLOG(INFO)
+#define GRPC_SETTINGS_TIMEOUT_DLOG \
+  LOG(ERROR)  // TODO(unknown): change to DVLOG(INFO)
 
 // This class can only be used only from a promise based HTTP2 transports
 // general_party_ .

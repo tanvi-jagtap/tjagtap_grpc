@@ -1100,4 +1100,4 @@ Http2Status Http2ClientTransport::ProcessHttp2SettingsFrame(
   }
 
 }  // namespace http2
-}  // namespace grpc_core
+}  // namespace http2

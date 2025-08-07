@@ -783,7 +783,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutOneSetting) {
   SettingsTimeoutManager manager;
   ExecCtx exec_ctx;
   manager.SetSettingsTimeout(ChannelArgs(), Duration::Milliseconds(300));
-  absl::Notification notification;
+  Notification notification;
   party->Spawn(
       "SettingsTimeoutManagerTest",
       TryJoin<absl::StatusOr>(MockStartSettingsTimeout(manager),
@@ -800,7 +800,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettings) {
   SettingsTimeoutManager manager;
   ExecCtx exec_ctx;
   manager.SetSettingsTimeout(ChannelArgs(), Duration::Milliseconds(300));
-  absl::Notification notification;
+  Notification notification;
   party->Spawn(
       "SettingsTimeoutManagerTest",
       TrySeq(TryJoin<absl::StatusOr>(MockStartSettingsTimeout(manager),
@@ -809,9 +809,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettings) {
                                      MockSettingsAckReceived(manager)),
              TryJoin<absl::StatusOr>(MockStartSettingsTimeout(manager),
                                      MockSettingsAckReceived(manager))),
-      [&notification](
-          absl::StatusOr<std::tuple<grpc_core::Empty, grpc_core::Empty>>
-              status) {
+      [&notification](absl::StatusOr<std::tuple<Empty, Empty>> status) {
         EXPECT_OK(status);
         notification.Notify();
       });
@@ -823,7 +821,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutOneSettingRareOrder) {
   SettingsTimeoutManager manager;
   ExecCtx exec_ctx;
   manager.SetSettingsTimeout(ChannelArgs(), Duration::Milliseconds(300));
-  absl::Notification notification;
+  Notification notification;
   party->Spawn(
       "SettingsTimeoutManagerTest",
       TryJoin<absl::StatusOr>(MockSettingsAckReceived(manager),
@@ -840,7 +838,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettingsRareOrder) {
   SettingsTimeoutManager manager;
   ExecCtx exec_ctx;
   manager.SetSettingsTimeout(ChannelArgs(), Duration::Milliseconds(300));
-  absl::Notification notification;
+  Notification notification;
   party->Spawn(
       "SettingsTimeoutManagerTest",
       TrySeq(TryJoin<absl::StatusOr>(MockSettingsAckReceived(manager),
@@ -849,9 +847,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettingsRareOrder) {
                                      MockStartSettingsTimeout(manager)),
              TryJoin<absl::StatusOr>(MockSettingsAckReceived(manager),
                                      MockStartSettingsTimeout(manager))),
-      [&notification](
-          absl::StatusOr<std::tuple<grpc_core::Empty, grpc_core::Empty>>
-              status) {
+      [&notification](absl::StatusOr<std::tuple<Empty, Empty>> status) {
         EXPECT_OK(status);
         notification.Notify();
       });
@@ -863,7 +859,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettingsMixedOrder) {
   SettingsTimeoutManager manager;
   ExecCtx exec_ctx;
   manager.SetSettingsTimeout(ChannelArgs(), Duration::Milliseconds(300));
-  absl::Notification notification;
+  Notification notification;
   party->Spawn(
       "SettingsTimeoutManagerTest",
       TrySeq(TryJoin<absl::StatusOr>(MockStartSettingsTimeout(manager),
@@ -874,9 +870,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettingsMixedOrder) {
                                      MockStartSettingsTimeout(manager)),
              TryJoin<absl::StatusOr>(MockStartSettingsTimeout(manager),
                                      MockSettingsAckReceived(manager))),
-      [&notification](
-          absl::StatusOr<std::tuple<grpc_core::Empty, grpc_core::Empty>>
-              status) {
+      [&notification](absl::StatusOr<std::tuple<Empty, Empty>> status) {
         EXPECT_OK(status);
         notification.Notify();
       });
@@ -889,8 +883,9 @@ TEST_F(SettingsTimeoutManagerTest, TimeoutOneSetting) {
   ExecCtx exec_ctx;
   manager.SetSettingsTimeout(ChannelArgs().Set(GRPC_ARG_SETTINGS_TIMEOUT, 300),
                              Duration::Milliseconds(300));
-  absl::Notification notification1;
-  absl::Notification notification2;
+  Notification notification1;
+  absl::Notification;
+  notification1;
   party->Spawn("SettingsTimeoutManagerTestStart",
                MockStartSettingsTimeout(manager),
                [&notification1](absl::Status status) {
@@ -902,9 +897,9 @@ TEST_F(SettingsTimeoutManagerTest, TimeoutOneSetting) {
       "SettingsTimeoutManagerTestAck",
       TrySeq(Sleep(Duration::Milliseconds(1400)),
              MockSettingsAckReceived(manager)),
-      [&notification2](absl::Status status) { notification2.Notify(); });
+      [&notification1](absl::Status status) { notification1.Notify(); });
   notification1.WaitForNotification();
-  notification2.WaitForNotification();
+  notification1.WaitForNotification();
 }
 
 // TODO(tjagtap) : [PH2][P2] Write tests similar to
