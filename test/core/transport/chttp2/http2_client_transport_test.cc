@@ -824,9 +824,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettings) {
                                      MockSettingsAckReceived(manager)),
              TryJoin<absl::StatusOr>(MockStartSettingsTimeout(manager),
                                      MockSettingsAckReceived(manager))),
-      [&notification](
-          absl::StatusOr<std::tuple<grpc_core::Empty, grpc_core::Empty>>
-              status) {
+      [&notification](absl::StatusOr<std::tuple<Empty, Empty>> status) {
         EXPECT_TRUE(status.ok());
         notification.Notify();
       });
@@ -850,9 +848,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettingsDelayed) {
                                      MockSettingsAckReceivedDelayed(manager)),
              TryJoin<absl::StatusOr>(MockStartSettingsTimeout(manager),
                                      MockSettingsAckReceivedDelayed(manager))),
-      [&notification](
-          absl::StatusOr<std::tuple<grpc_core::Empty, grpc_core::Empty>>
-              status) {
+      [&notification](absl::StatusOr<std::tuple<Empty, Empty>> status) {
         EXPECT_TRUE(status.ok());
         notification.Notify();
       });
@@ -902,9 +898,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettingsRareOrder) {
                                      MockStartSettingsTimeout(manager)),
              TryJoin<absl::StatusOr>(MockSettingsAckReceived(manager),
                                      MockStartSettingsTimeout(manager))),
-      [&notification](
-          absl::StatusOr<std::tuple<grpc_core::Empty, grpc_core::Empty>>
-              status) {
+      [&notification](absl::StatusOr<std::tuple<Empty, Empty>> status) {
         EXPECT_TRUE(status.ok());
         notification.Notify();
       });
@@ -928,9 +922,7 @@ TEST_F(SettingsTimeoutManagerTest, NoTimeoutThreeSettingsMixedOrder) {
                                      MockStartSettingsTimeout(manager)),
              TryJoin<absl::StatusOr>(MockStartSettingsTimeout(manager),
                                      MockSettingsAckReceived(manager))),
-      [&notification](
-          absl::StatusOr<std::tuple<grpc_core::Empty, grpc_core::Empty>>
-              status) {
+      [&notification](absl::StatusOr<std::tuple<Empty, Empty>> status) {
         EXPECT_TRUE(status.ok());
         notification.Notify();
       });
