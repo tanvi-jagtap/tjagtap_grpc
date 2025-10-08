@@ -82,14 +82,14 @@ static const std::vector<uint8_t> kPathDemoServiceStep = {
     0x64, 0x65, 0x6d, 0x6f, 0x2e, 0x53, 0x65, 0x72, 0x76,
     0x69, 0x63, 0x65, 0x2f, 0x53, 0x74, 0x65, 0x70};
 
-class Http2ClientTransportTest : public TransportTest {
+class Http2ClientTransportTest : public util::testing::TransportTest {
  public:
   Http2ClientTransportTest() {
     grpc_tracer_set_enabled("http2_ph2_transport", true);
   }
 
  protected:
-  Http2FrameTestHelper helper_;
+  transport::testing::Http2FrameTestHelper helper_;
   OrphanablePtr<Http2ClientTransport> client_transport_;
   PostMortem postmortem_;
 };
@@ -107,7 +107,7 @@ TEST_F(Http2ClientTransportTest, TestHttp2ClientTransportObjectCreation) {
   // client_transport().
 
   LOG(INFO) << "TestHttp2ClientTransportObjectCreation Begin";
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
 
   mock_endpoint.ExpectWrite(
       {
@@ -170,7 +170,7 @@ TEST_F(Http2ClientTransportTest, TestHttp2ClientTransportObjectCreation) {
 ////////////////////////////////////////////////////////////////////////////////
 // Basic Transport Write Tests
 TEST_F(Http2ClientTransportTest, TestHttp2ClientTransportWriteFromCall) {
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
   std::string data_payload = "Hello!";
 
   // Invoking read_close_trailing_metadata will result the ReadLoop to be woken
@@ -272,7 +272,7 @@ TEST_F(Http2ClientTransportTest, TestHttp2ClientTransportWriteFromCall) {
 TEST_F(Http2ClientTransportTest, TestHttp2ClientTransportPingRead) {
   // Simple test to validate a proper ping ack is sent out on receiving a ping
   // request.
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
   mock_endpoint.ExpectWrite(
       {
           EventEngineSlice(
@@ -325,7 +325,7 @@ TEST_F(Http2ClientTransportTest, TestHttp2ClientTransportPingWrite) {
   // while endpoint write as it is an internally generated random number.
   // 2. The ping request promise is resolved once ping ack is received.
   // 3. Redundant acks are ignored.
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
   StrictMock<MockFunction<void()>> ping_ack_received;
   EXPECT_CALL(ping_ack_received, Call());
 
@@ -407,7 +407,7 @@ TEST_F(Http2ClientTransportTest, TestHttp2ClientTransportPingTimeout) {
   // 1. The ping request promise is never resolved as there is no ping ack.
   // 2. Transport is closed when ping times out.
 
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
   StrictMock<MockFunction<void()>> ping_ack_received;
 
   // ExpectDelayedReadClose returns a callable. Till this callable is invoked,
@@ -468,7 +468,7 @@ TEST_F(Http2ClientTransportTest, TestHttp2ClientTransportMultiplePings) {
   // This test asserts the following:
   // 1. Both the ping requests are written on the endpoint.
   // 2. The first ping request is resolved after the ping ack is received.
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
   StrictMock<MockFunction<void()>> ping_ack_received;
   EXPECT_CALL(ping_ack_received, Call());
   auto ping_complete = std::make_shared<Latch<void>>();
@@ -582,7 +582,7 @@ TEST_F(Http2ClientTransportTest, TestHttp2ClientTransportMultiplePings) {
 // Header, Data and Continuation Frame Read Tests
 
 TEST_F(Http2ClientTransportTest, TestHeaderDataHeaderFrameOrder) {
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
 
   // Make our mock_enpoint pretend that the peer sent
   // 1. A HEADER frame that contains our initial metadata
@@ -715,7 +715,7 @@ TEST_F(Http2ClientTransportTest, TestHeaderDataHeaderFrameOrder) {
 ////////////////////////////////////////////////////////////////////////////////
 // Close Stream Tests
 TEST_F(Http2ClientTransportTest, StreamCleanupTrailingMetadata) {
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
   absl::AnyInvocable<void()> read_cb_transport_close;
   StrictMock<MockFunction<void()>> on_done;
   EXPECT_CALL(on_done, Call()).Times(2);
@@ -800,7 +800,7 @@ TEST_F(Http2ClientTransportTest, StreamCleanupTrailingMetadata) {
 }
 
 TEST_F(Http2ClientTransportTest, StreamCleanupTrailingMetadataWithResetStream) {
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
   absl::AnyInvocable<void()> read_cb_transport_close;
   StrictMock<MockFunction<void()>> on_done;
   EXPECT_CALL(on_done, Call()).Times(1);
@@ -876,7 +876,7 @@ TEST_F(Http2ClientTransportTest, StreamCleanupTrailingMetadataWithResetStream) {
 }
 
 TEST_F(Http2ClientTransportTest, StreamCleanupResetStream) {
-  MockPromiseEndpoint mock_endpoint(/*port=*/1000);
+  util::testing::MockPromiseEndpoint mock_endpoint(/*port=*/1000);
   absl::AnyInvocable<void()> read_cb_transport_close;
   StrictMock<MockFunction<void()>> on_done;
   EXPECT_CALL(on_done, Call());
